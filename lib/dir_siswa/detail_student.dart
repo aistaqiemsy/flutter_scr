@@ -104,6 +104,33 @@ class DetailStudent extends StatelessWidget {
                     child: Container(
                     width: 70,
                     child: Text(
+                            "Jurusan",
+                            style: TextStyle(
+                              fontSize: 17,
+                            ),
+                          ),
+                        ),
+                    
+                    ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 20),
+                    child: Text(
+                      ": [ Jurusan ]",
+                      style: TextStyle(
+                        fontSize: 17,
+                      ),
+                      ),
+                    )
+                ],
+              ),
+
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 50, left: 25, top: 20),
+                    child: Container(
+                    width: 70,
+                    child: Text(
                             "Rayon",
                             style: TextStyle(
                               fontSize: 17,

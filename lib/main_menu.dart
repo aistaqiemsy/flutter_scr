@@ -10,23 +10,7 @@ class MainMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: ListTile(
-          leading: Icon(
-            Icons.menu
-          ),
-          title: Text(
-            "DAFTAR MENU",
-            style: TextStyle(
-              color: Colors.white
-            ),
-            ),
-          subtitle: Text(
-            "Selamat Datang Bapak / Ibu [ Nama ]",
-            style: TextStyle(
-              color: Colors.white
-            ),
-            ),
-        ),
+        title: Text("Piket Rayon")
       ),
       body: ListView(
         children: [
@@ -34,11 +18,11 @@ class MainMenu extends StatelessWidget {
             margin: EdgeInsets.all(5),
             elevation: 5,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30)
+              borderRadius: BorderRadius.circular(25)
             ),
             child: Center(
               child: Padding(
-                padding: EdgeInsets.all(5),
+                padding: EdgeInsets.all(20),
                 child: TextButton(
                   onPressed: () {
                     Navigator.push(
@@ -47,17 +31,26 @@ class MainMenu extends StatelessWidget {
                         builder: (context) => DisplayStudent())
                     );
                   },
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(right: 5, top: 10, bottom: 10),
-                        child: Icon( 
-                          Icons.people_alt_rounded
-                        ),
-                      ),
-                      Text("DATA PESERTA DIDIK")
-                    ],
-                  ),
+                  child: ListTile(
+                    title: Text("DATA PESERTA DIDIK"),
+                    subtitle: Text("Peserta didik yang masuk dalam jadwal piket ruang PPLG"),
+                    leading: Image.asset(
+                      'assets/icons/clean_room.png',
+                      width: 50,
+                      height: 50,
+                      )
+                  )
+                  //   Row(
+                  //   children: [
+                  //     Padding(
+                  //       padding: EdgeInsets.only(right: 5, top: 10, bottom: 10),
+                  //       child: Icon( 
+                  //         Icons.people_alt_rounded
+                  //       ),
+                  //     ),
+                  //     Text("DATA PESERTA DIDIK")
+                  //   ],
+                  // ),
                 )
               ),
             )
@@ -84,7 +77,7 @@ class MainMenu extends StatelessWidget {
                           Icons.person
                         ),
                       ),
-                      Text("DATA PEMBINGBING RAYON")
+                      Text("DATA PEMBIMBING RAYON")
                     ],
                   ),
                 )
