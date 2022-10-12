@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'PPLG APP',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
       //   title: Text("SCR Wikrama"),
       // ),
 
-      backgroundColor: Colors.orange[400], // warna dasar app
+      // backgroundColor: Colors.orange[400], // warna dasar app
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

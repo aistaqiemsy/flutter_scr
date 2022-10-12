@@ -11,28 +11,27 @@ class DashboardPs extends StatelessWidget {
       backgroundColor: Colors.orange[400],
       appBar: AppBar(
         backgroundColor: Colors.blueGrey[200],
-        leading: Icon(
-          Icons.home_filled
+        leading: Image.asset(
+          "assets/icons/clean_room.png",
+          width: 35,
+          height: 35,
         ),
         title: Text("PPLG APPS"),
         actions: [
-        Padding(
-          padding: EdgeInsets.only(
-            bottom: 22
-          ),
-          child: InkWell(
-            onTap: () {
-
-            },
-            child: Card(
-              elevation: 5,
-              child: Padding(
-                padding: EdgeInsets.all(5),
-                child: Text("KELUAR"),
-              ),
-            ),
-          )
-        )
+          Padding(
+              padding: EdgeInsets.only(bottom: 22),
+              child: InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Card(
+                  elevation: 5,
+                  child: Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Text("KELUAR"),
+                  ),
+                ),
+              ))
         ],
       ),
       body: Padding(
@@ -41,48 +40,70 @@ class DashboardPs extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Selamat Datang\nBapak ..."),
+            Padding(
+              padding: EdgeInsets.only(bottom: 20),
+              child: ListTile(
+                title: Text("Selamat Datang Bapak / Ibu"),
+                subtitle: Text("[name]"),
+              ),
+            ),
             Row(
               children: [
-                Icon(
-                  Icons.menu_book_rounded,
-                  color: Colors.green[200],
+                Image.asset(
+                  "assets/icons/clean_room.png",
+                  width: 50,
+                  height: 50,
                 ),
                 Text("Menu Aplikasi"),
               ],
             ),
-
-            InkWell(
-              onTap: () {
-
-              },
-              child: Card(
-                  elevation: 2,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.leaderboard
+            Padding(
+              padding: EdgeInsets.only(left: 15, right: 15),
+              child: InkWell(
+                onTap: () {},
+                child: Card(
+                    elevation: 2,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 10, left: 15),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            "assets/icons/clean_room.png",
+                            width: 25,
+                            height: 25,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text("Piket Rayon"),
+                          )
+                        ],
                       ),
-                      Text("Piket Rayon")
-                    ],
-                  ),
-                ),
+                    )),
+              ),
             ),
-            InkWell(
-              onTap: () {
-
-              },
-              child: Card(
-                  elevation: 2,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.leaderboard
+            Padding(
+              padding: EdgeInsets.only(left: 15, right: 15),
+              child: InkWell(
+                onTap: () {},
+                child: Card(
+                    elevation: 2,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 10, left: 15),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            "assets/icons/clean_room.png",
+                            width: 25,
+                            height: 25,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text("Peminjaman"),
+                          )
+                        ],
                       ),
-                      Text("Peminjaman Alat")
-                    ],
-                  ),
-                ),
+                    )),
+              ),
             )
           ],
         ),
