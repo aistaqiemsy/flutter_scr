@@ -116,7 +116,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                     context, 
                     MaterialPageRoute(
-                      builder: (context) => DashboardPs())
+                      builder: (context) => DashboardPs(
+                        pembimbing: "Juliana Mansur, M.Kom",
+                        id_ps: 1
+                      ))
                   );
                 }, 
                 child: Text("Masuk")

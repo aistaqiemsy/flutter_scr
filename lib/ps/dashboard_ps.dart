@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:scr_wikrama/ps/piket_rayon.dart';
 
 class DashboardPs extends StatelessWidget {
-  const DashboardPs({super.key});
+  const DashboardPs({super.key, required this.pembimbing, required this.id_ps});
+
+  final String pembimbing;
+  final int id_ps;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +64,15 @@ class DashboardPs extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: 15, right: 15),
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PiketRayon(
+                                pembimbing: pembimbing,
+                                id_ps: 1,
+                              )));
+                },
                 child: Card(
                     elevation: 2,
                     child: Padding(
