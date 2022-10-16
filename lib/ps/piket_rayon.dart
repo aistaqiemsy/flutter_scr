@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:scr_wikrama/dir_siswa/display_students.dart';
+import 'package:scr_wikrama/dir_siswa/display_students.dart';
 import 'package:scr_wikrama/ps/detail_ps.dart';
 
 class PiketRayon extends StatefulWidget {
@@ -18,6 +20,10 @@ class _PiketRayonState extends State<PiketRayon> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Icon(
+          Icons.clean_hands
+        ),
+        backgroundColor: Colors.amber[600],
         title: Text("Piket Rayon"),
       ),
       body: Column(
@@ -73,7 +79,13 @@ class _PiketRayonState extends State<PiketRayon> {
                     elevation: 3,
                     color: Colors.amber[50],
                     child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DisplayStudent()
+                                  ));
+                        },
                         child: Column(
                           children: [
                             Padding(

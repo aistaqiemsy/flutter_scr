@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scr_wikrama/dir_siswa/display_student.dart';
+import 'package:scr_wikrama/dir_siswa/display_students.dart';
 import 'package:scr_wikrama/main_menu.dart';
 import 'package:scr_wikrama/ps/dashboard_ps.dart';
 
@@ -55,21 +55,13 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(right: 15, top: 25, left: 15, bottom: 25),
-              child: Card(
-                elevation: 5,
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      top: 10,
-                      bottom: 10
-                    ),
-                    child: CircleAvatar(
-                    backgroundColor: Colors.grey[200],
-                    child: Icon(
-                      Icons.computer_sharp,
-                    ),
-                  ),
-                  ),
+              child: CircleAvatar(
+                maxRadius: 50,
+                
+                backgroundColor: Colors.amber[600],
+                child: Icon(
+                  Icons.computer_sharp,
+                  size: 40,
                 ),
               ),
             ),
@@ -83,6 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: EdgeInsets.only(right: 15, left: 15, bottom: 10),
               child:  TextFormField(
                 decoration: InputDecoration(
+                  iconColor: Colors.amber[50],
                   prefixIcon: Icon(
                     Icons.email_rounded
                   ),
@@ -122,7 +115,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       ))
                   );
                 }, 
-                child: Text("Masuk")
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text("Masuk"),
+                )
               )
             ),
 

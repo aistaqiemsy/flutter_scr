@@ -9,15 +9,32 @@ class DetailStudent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("DETAIL PESERTA DIDIK"),
+        leading: Icon(
+          Icons.person
+        ),
+        backgroundColor: Colors.amber[600],
+        title: Text("Profil Peserta Didik"),
       ),
       body: Center(
-        child: Card(
+        child: Padding(
+          padding: EdgeInsets.only(top: 15, right: 20, left: 20),
+          child: Card(
+          color: Colors.amber[50],
           elevation: 5,
           child: Column(
             children: [
+              Padding(
+                    padding: EdgeInsets.only(top: 20, bottom: 25),
+                    child: CircleAvatar(
+                      maxRadius: 50,
+                        child: Icon(
+                          size: 40,
+                          Icons.person_outlined
+                        ),
+                      ),
+                  ),
               Row(
-                children: [                  
+                children: [                
                   Padding(
                     padding: EdgeInsets.only(right: 50, left: 25, top: 20),
                     child: Container(
@@ -89,33 +106,6 @@ class DetailStudent extends StatelessWidget {
                     padding: EdgeInsets.only(top: 20),
                     child: Text(
                       ": [ Kelas ]",
-                      style: TextStyle(
-                        fontSize: 17,
-                      ),
-                      ),
-                    )
-                ],
-              ), 
-
-              Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(right: 50, left: 25, top: 20),
-                    child: Container(
-                    width: 70,
-                    child: Text(
-                            "Jurusan",
-                            style: TextStyle(
-                              fontSize: 17,
-                            ),
-                          ),
-                        ),
-                    
-                    ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 20),
-                    child: Text(
-                      ": [ Jurusan ]",
                       style: TextStyle(
                         fontSize: 17,
                       ),
@@ -203,37 +193,43 @@ class DetailStudent extends StatelessWidget {
                       ),
                     )
                 ],
-              ),
-
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                      
-                      },
-                      child: Text("EDIT"),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                      
-                      },
-                      child: Text(
-                        "HAPUS",
-                        style: TextStyle(
-                          color: Colors.red[400]
-                        ),
-                        
-                        ),
-                    ),
-
-                  ],
-                )
-              )          
+              ),         
             ],
           ),
+        ),
         )
+      ),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(right: 15),
+        child: Row(
+        // crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(right: 10),
+            child: FloatingActionButton(
+              backgroundColor: Colors.amber[200],
+              child: Icon(
+                color: Colors.blueGrey,
+                Icons.create
+              ),
+              onPressed: () {
+
+              },
+            ),
+          ),
+          FloatingActionButton(
+            backgroundColor: Colors.amber[200],
+            child: Icon(
+              color:  Colors.red,
+              Icons.delete
+            ),
+            onPressed: () {
+              
+            },
+          )
+        ],
+      ),
       ),
     );
   }

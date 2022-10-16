@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:scr_wikrama/dir_siswa/display_student.dart';
+import 'package:scr_wikrama/dir_siswa/display_students.dart';
 
 class MainMenu extends StatelessWidget {
   const MainMenu({super.key});

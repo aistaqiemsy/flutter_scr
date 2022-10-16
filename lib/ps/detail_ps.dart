@@ -16,6 +16,7 @@ class _DetailPSState extends State<DetailPS> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.amber[600],
         title: Text("Profil Pembimbing Rayon"),
       ),
       body: Column(
