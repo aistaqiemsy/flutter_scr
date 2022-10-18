@@ -65,7 +65,7 @@ class _PiketRayonState extends State<PiketRayon> {
                             Padding(
                               padding: EdgeInsets.only(
                                   bottom: 10, left: 5, right: 5),
-                              child: Text("Pembimbing Rayon",
+                              child: Text(pembimbing,
                                   textAlign: TextAlign.center),
                             ),
                           ],

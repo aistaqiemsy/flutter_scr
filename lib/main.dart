@@ -33,19 +33,39 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  TextEditingController _username = new TextEditingController();
+  TextEditingController _password = new TextEditingController();
+
   List userdata = [];
   Future<void> _onLogin() async {
-    final url =
+    var url =
         Uri.http("10.10.9.103", "/scr_wikrama/login.php", {'q': '{http}'});
+    var response = await http.post(url, body: {
+      "username" : _username.text,
+      "password" : _password.text
+    });
 
     try {
-      var response = await http.get(url);
+      if (response.statusCode == 200) {
 
-      print(response.body);
+          userdata = jsonDecode(response.body);
+          print(userdata);
 
-      setState(() {
-        userdata = jsonDecode(response.body);
-      });
+          Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DashboardPs(
+                        pembimbing: userdata.toList(),
+                        id_ps: 1)));
+          _username.clear();
+          _password.clear();
+      } else {
+        print("Koneksi gagal!");
+      }
+
+      // setState(() {
+      //   userdata = jsonDecode(response.body);
+      // });
       
     } catch (e) {
       print(e);
@@ -84,6 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Padding(
               padding: EdgeInsets.only(right: 15, left: 15, bottom: 10),
               child: TextFormField(
+                controller: _username,
                 decoration: InputDecoration(
                     iconColor: Colors.amber[50],
                     prefixIcon: Icon(Icons.email_rounded),
@@ -95,6 +116,8 @@ class _MyHomePageState extends State<MyHomePage> {
             Padding(
               padding: EdgeInsets.only(right: 15, left: 15, bottom: 10),
               child: TextFormField(
+                controller: _password,
+                obscureText: true,
                 decoration: InputDecoration(
                     prefixIcon: Icon(Icons.password_rounded),
                     hintText: ("Kata Sandi"),
