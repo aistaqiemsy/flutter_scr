@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:scr_wikrama/api/ServicesApi.dart';
 import 'package:scr_wikrama/dir_siswa/display_students.dart';
 import 'package:scr_wikrama/main_menu.dart';
 import 'package:scr_wikrama/ps/dashboard_ps.dart';
@@ -33,6 +34,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  ServicesApi Api = ServicesApi();
+  late Future<List<void>> listData;
+
   TextEditingController _username = new TextEditingController();
   TextEditingController _password = new TextEditingController();
 
@@ -40,33 +44,24 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _onLogin() async {
     var url =
         Uri.http("10.10.9.103", "/scr_wikrama/login.php", {'q': '{http}'});
-    var response = await http.post(url, body: {
-      "username" : _username.text,
-      "password" : _password.text
-    });
+    var response = await http.post(url,
+        body: {"username": _username.text, "password": _password.text});
 
     try {
       if (response.statusCode == 200) {
+        userdata = jsonDecode(response.body);
+        print(userdata);
 
-          userdata = jsonDecode(response.body);
-          print(userdata);
-
-          Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => DashboardPs(
-                        pembimbing: userdata.toList(),
-                        id_ps: 1)));
-          _username.clear();
-          _password.clear();
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    DashboardPs(pembimbing: userdata.toList(), id_ps: 1)));
+        _username.clear();
+        _password.clear();
       } else {
         print("Koneksi gagal!");
       }
-
-      // setState(() {
-      //   userdata = jsonDecode(response.body);
-      // });
-      
     } catch (e) {
       print(e);
     }
@@ -149,7 +144,8 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => MainMenu()));
+              context, MaterialPageRoute(
+                builder: (context) => MainMenu()));
         },
         child: const Icon(Icons.logout_outlined),
       ),
