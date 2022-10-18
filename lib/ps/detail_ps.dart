@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:scr_wikrama/ps/jadwal_piket_rayon.dart';
 
 class DetailPS extends StatefulWidget {
   const DetailPS({super.key, required this.pembimbing, required this.id_ps});
@@ -127,11 +128,16 @@ class _DetailPSState extends State<DetailPS> {
               color: Colors.amber[50],
               elevation: 3,
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => JadwalPiketRayon()
+                      )
+                  );
+                },
                 child: ListTile(
-                  leading: Icon(
-                    Icons.people_sharp
-                  ),
+                  leading: Icon(Icons.people_sharp),
                   title: Text("Jadwal Piket"),
                   subtitle: Text("Jadwal Piket Harian Rayon"),
                 ),
@@ -146,9 +152,7 @@ class _DetailPSState extends State<DetailPS> {
               child: InkWell(
                 onTap: () {},
                 child: ListTile(
-                  leading: Icon(
-                    Icons.list_alt
-                  ),
+                  leading: Icon(Icons.list_alt),
                   title: Text("Rekap Piket"),
                   subtitle: Text("[Ruang] | [Rayon]"),
                 ),
