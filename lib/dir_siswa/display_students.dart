@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:scr_wikrama/dir_siswa/add_student.dart';
 import 'package:scr_wikrama/dir_siswa/detail_student.dart';
 
 class DisplayStudent extends StatelessWidget {
-  const DisplayStudent({super.key});
+  const DisplayStudent({super.key, required this.students});
+  final List students;
 
   @override
   Widget build(BuildContext context) {

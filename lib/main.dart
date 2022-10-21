@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:scr_wikrama/api/ServicesApi.dart';
 import 'package:scr_wikrama/dir_siswa/display_students.dart';
 import 'package:scr_wikrama/main_menu.dart';
+import 'package:scr_wikrama/model_pembimbing.dart';
 import 'package:scr_wikrama/ps/dashboard_ps.dart';
 import 'package:http/http.dart' as http;
 
@@ -34,37 +35,57 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  ServicesApi Api = ServicesApi();
-  late Future<List<void>> listData;
-
   TextEditingController _username = new TextEditingController();
   TextEditingController _password = new TextEditingController();
+  List userLogin = [];
 
-  List userdata = [];
-  Future<void> _onLogin() async {
+  // ModelPembimbing _modelPembimbing = new ModelPembimbing();
+
+  // Future<List<ModelPembimbing>> _futureLogin() async {
+  //     var url =
+  //         Uri.http("127.0.0.1", "/scr_wikrama/login.php", {'q': '{http}'});
+  //     var response = await http.post(url,
+  //         body: {"username": _username.text, "password": _password.text},
+  //         headers: {
+  //           "Access-Control-Allow-Methods": "POST, OPTIONS"
+  //         }
+  //     );
+  //
+  //   List getData = jsonDecode(response.body) as List<dynamic>;
+  //   userLogin = getData;
+  //   return userLogin
+  //           .map((e) => ModelPembimbing.fromJson(e)).toList();
+  // }
+
+  Future<void> _onLogin() async { // login tanpa model
     var url =
-        Uri.http("10.10.9.103", "/scr_wikrama/login.php", {'q': '{http}'});
+        Uri.http("127.0.0.1", "/scr_wikrama/login.php", {'q': '{http}'});
     var response = await http.post(url,
-        body: {"username": _username.text, "password": _password.text});
+        body: {"username": _username.text, "password": _password.text},
+        headers: {
+          "Access-Control-Allow-Methods": "POST, OPTIONS"
+        }
+    );
 
-    try {
       if (response.statusCode == 200) {
-        userdata = jsonDecode(response.body);
-        print(userdata);
+        userLogin = jsonDecode(response.body);
+        // _mb = ModelPembimbing.fromJson(userLogin);
+
+        print(userLogin);
 
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    DashboardPs(pembimbing: userdata.toList(), id_ps: 1)));
+                    DashboardPs(userLogin: userLogin)
+                    ),
+        );
         _username.clear();
         _password.clear();
       } else {
         print("Koneksi gagal!");
       }
-    } catch (e) {
-      print(e);
-    }
+
   }
 
   @override
@@ -128,16 +149,23 @@ class _MyHomePageState extends State<MyHomePage> {
                       //     context,
                       //     MaterialPageRoute(
                       //         builder: (context) => DashboardPs(
-                      //             pembimbing: "Juliana Mansur, M.Kom",
-                      //             id_ps: 1)));
+                      //             userLogin: [userLogin],
+                      //     ),
+                      // )
+                      // );
 
                       print("\nDEBUG : \n");
                       _onLogin();
+                      // _futureLogin();
                     },
                     child: Padding(
                       padding: EdgeInsets.all(10),
                       child: Text("Masuk"),
-                    ))),
+                    ),
+                ),
+            ),
+
+
           ],
         ),
       ),

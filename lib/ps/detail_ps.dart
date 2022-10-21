@@ -3,164 +3,326 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:scr_wikrama/ps/jadwal_piket_rayon.dart';
 
-class DetailPS extends StatefulWidget {
-  const DetailPS({super.key, required this.pembimbing, required this.id_ps});
-  final String pembimbing;
-  final int id_ps;
+class DetailPS extends StatelessWidget {
+  const DetailPS({Key? key, required this.userLogin}) : super(key: key);
+  final List userLogin;
 
-  @override
-  State<DetailPS> createState() => _DetailPSState();
-}
-
-class _DetailPSState extends State<DetailPS> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.amber[600],
-        title: Text("Profil Pembimbing Rayon"),
+        title: Text("Profil Pembimbing"),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(top: 10, bottom: 15, left: 15, right: 15),
-            child: Card(
-              color: Colors.amber[50],
-              elevation: 4,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 20, bottom: 15),
-                    child: CircleAvatar(
-                      child: Icon(
-                        Icons.people_rounded,
+      body: ListView.builder(
+        itemCount: userLogin.length,
+        itemBuilder: (context, index) {
+          return Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 15, left: 15, right: 15),
+                child: Card(
+                  color: Colors.amber[50],
+                  elevation: 4,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 20, bottom: 15),
+                        child: CircleAvatar(
+                          child: Icon(
+                            Icons.people_rounded,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, bottom: 5, top: 20),
-                    child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(right: 0),
-                          child: Container(
-                            width: 200,
-                            child: Text("Nama"),
-                          ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 10, bottom: 5, top: 20),
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: 0),
+                              child: Container(
+                                width: 200,
+                                child: Text("Nama"),
+                              ),
+                            ),
+                            Text(": "+userLogin[index]["nama"])
+                          ],
                         ),
-                        Text(": [Nama]")
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, bottom: 5),
-                    child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(right: 0),
-                          child: Container(
-                            width: 200,
-                            child: Text("Kelamin"),
-                          ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 10, bottom: 5),
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: 0),
+                              child: Container(
+                                width: 200,
+                                child: Text("Kelamin"),
+                              ),
+                            ),
+                            Text(": "+userLogin[index]["jk"])
+                          ],
                         ),
-                        Text(": [Kelamin]")
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, bottom: 5),
-                    child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(right: 0),
-                          child: Container(
-                            width: 200,
-                            child: Text("Rayon"),
-                          ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 10, bottom: 5),
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: 0),
+                              child: Container(
+                                width: 200,
+                                child: Text("Rayon"),
+                              ),
+                            ),
+                            Text(": "+userLogin[index]["rayon"])
+                          ],
                         ),
-                        Text(": [Rayon]")
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, bottom: 5),
-                    child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(right: 0),
-                          child: Container(
-                            width: 200,
-                            child: Text("Ruang"),
-                          ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 10, bottom: 5),
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: 0),
+                              child: Container(
+                                width: 200,
+                                child: Text("Ruang"),
+                              ),
+                            ),
+                            Text(": "+userLogin[index]["id_ruang"])
+                          ],
                         ),
-                        Text(": [Ruang]")
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, bottom: 20),
-                    child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(right: 0),
-                          child: Container(
-                            width: 200,
-                            child: Text("Tahun Ajaran"),
-                          ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 10, bottom: 20),
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: 0),
+                              child: Container(
+                                width: 200,
+                                child: Text("Tahun Ajaran"),
+                              ),
+                            ),
+                            Text(": "+userLogin[index]["th_ajaran"])
+                          ],
                         ),
-                        Text(": [Tahun Ajaran]")
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 10, right: 15, left: 15),
-            child: Card(
-              color: Colors.amber[50],
-              elevation: 3,
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => JadwalPiketRayon()
-                      )
-                  );
-                },
-                child: ListTile(
-                  leading: Icon(Icons.people_sharp),
-                  title: Text("Jadwal Piket"),
-                  subtitle: Text("Jadwal Piket Harian Rayon"),
                 ),
               ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 5, right: 15, left: 15),
-            child: Card(
-              color: Colors.amber[50],
-              elevation: 3,
-              child: InkWell(
-                onTap: () {},
-                child: ListTile(
-                  leading: Icon(Icons.list_alt),
-                  title: Text("Rekap Piket"),
-                  subtitle: Text("[Ruang] | [Rayon]"),
+              Padding(
+                padding: EdgeInsets.only(top: 10, right: 15, left: 15),
+                child: Card(
+                  color: Colors.amber[50],
+                  elevation: 3,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => JadwalPiketRayon(
+                                piketSiswa: userLogin,
+                              )
+                          )
+                      );
+                    },
+                    child: ListTile(
+                      leading: Icon(Icons.people_sharp),
+                      title: Text("Jadwal Piket"),
+                      subtitle: Text("Jadwal Piket Harian Rayon"),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          )
-        ],
+              Padding(
+                padding: EdgeInsets.only(top: 5, right: 15, left: 15),
+                child: Card(
+                  color: Colors.amber[50],
+                  elevation: 3,
+                  child: InkWell(
+                    onTap: () {},
+                    child: ListTile(
+                      leading: Icon(Icons.list_alt),
+                      title: Text("Rekap Piket"),
+                      subtitle: Text("[Ruang] | [Rayon]"),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          );
+        },
       ),
     );
   }
 }
+
+
+// class DetailPS extends StatefulWidget {
+//   const DetailPS({super.key, required this.userLogin});
+//   final List userLogin;
+//
+//   @override
+//   State<DetailPS> createState() => _DetailPSState();
+// }
+
+// class _DetailPSState extends State<DetailPS> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         backgroundColor: Colors.amber[600],
+//         title: Text("Profil Pembimbing Rayon"),
+//       ),
+//       body: Column(
+//         children: [
+//           Padding(
+//             padding: EdgeInsets.only(top: 10, bottom: 15, left: 15, right: 15),
+//             child: Card(
+//               color: Colors.amber[50],
+//               elevation: 4,
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.center,
+//                 children: [
+//                   Padding(
+//                     padding: EdgeInsets.only(top: 20, bottom: 15),
+//                     child: CircleAvatar(
+//                       child: Icon(
+//                         Icons.people_rounded,
+//                       ),
+//                     ),
+//                   ),
+//                   Padding(
+//                     padding: EdgeInsets.only(left: 10, bottom: 5, top: 20),
+//                     child: Row(
+//                       // mainAxisAlignment: MainAxisAlignment.center,
+//                       children: [
+//                         Padding(
+//                           padding: EdgeInsets.only(right: 0),
+//                           child: Container(
+//                             width: 200,
+//                             child: Text("Nama"),
+//                           ),
+//                         ),
+//                         // Text(": "+)
+//                       ],
+//                     ),
+//                   ),
+//                   Padding(
+//                     padding: EdgeInsets.only(left: 10, bottom: 5),
+//                     child: Row(
+//                       // mainAxisAlignment: MainAxisAlignment.center,
+//                       children: [
+//                         Padding(
+//                           padding: EdgeInsets.only(right: 0),
+//                           child: Container(
+//                             width: 200,
+//                             child: Text("Kelamin"),
+//                           ),
+//                         ),
+//                         Text(": [Kelamin]")
+//                       ],
+//                     ),
+//                   ),
+//                   Padding(
+//                     padding: EdgeInsets.only(left: 10, bottom: 5),
+//                     child: Row(
+//                       // mainAxisAlignment: MainAxisAlignment.center,
+//                       children: [
+//                         Padding(
+//                           padding: EdgeInsets.only(right: 0),
+//                           child: Container(
+//                             width: 200,
+//                             child: Text("Rayon"),
+//                           ),
+//                         ),
+//                         Text(": [Rayon]")
+//                       ],
+//                     ),
+//                   ),
+//                   Padding(
+//                     padding: EdgeInsets.only(left: 10, bottom: 5),
+//                     child: Row(
+//                       // mainAxisAlignment: MainAxisAlignment.center,
+//                       children: [
+//                         Padding(
+//                           padding: EdgeInsets.only(right: 0),
+//                           child: Container(
+//                             width: 200,
+//                             child: Text("Ruang"),
+//                           ),
+//                         ),
+//                         Text(": [Ruang]")
+//                       ],
+//                     ),
+//                   ),
+//                   Padding(
+//                     padding: EdgeInsets.only(left: 10, bottom: 20),
+//                     child: Row(
+//                       // mainAxisAlignment: MainAxisAlignment.center,
+//                       children: [
+//                         Padding(
+//                           padding: EdgeInsets.only(right: 0),
+//                           child: Container(
+//                             width: 200,
+//                             child: Text("Tahun Ajaran"),
+//                           ),
+//                         ),
+//                         Text(": [Tahun Ajaran]")
+//                       ],
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//           Padding(
+//             padding: EdgeInsets.only(top: 10, right: 15, left: 15),
+//             child: Card(
+//               color: Colors.amber[50],
+//               elevation: 3,
+//               child: InkWell(
+//                 onTap: () {
+//                   Navigator.push(
+//                       context,
+//                       MaterialPageRoute(
+//                           builder: (context) => JadwalPiketRayon()
+//                       )
+//                   );
+//                 },
+//                 child: ListTile(
+//                   leading: Icon(Icons.people_sharp),
+//                   title: Text("Jadwal Piket"),
+//                   subtitle: Text("Jadwal Piket Harian Rayon"),
+//                 ),
+//               ),
+//             ),
+//           ),
+//           Padding(
+//             padding: EdgeInsets.only(top: 5, right: 15, left: 15),
+//             child: Card(
+//               color: Colors.amber[50],
+//               elevation: 3,
+//               child: InkWell(
+//                 onTap: () {},
+//                 child: ListTile(
+//                   leading: Icon(Icons.list_alt),
+//                   title: Text("Rekap Piket"),
+//                   subtitle: Text("[Ruang] | [Rayon]"),
+//                 ),
+//               ),
+//             ),
+//           )
+//         ],
+//       ),
+//     );
+//   }
+// }

@@ -28,7 +28,9 @@ class MainMenu extends StatelessWidget {
                     Navigator.push(
                       context, 
                       MaterialPageRoute(
-                        builder: (context) => DisplayStudent())
+                        builder: (context) => DisplayStudent(
+                          students: [],
+                        ))
                     );
                   },
                   child: ListTile(
