@@ -34,7 +34,7 @@ class _DetailPSState extends State<DetailPS> {
 
   Future<void> _getPiket() async { // ambit data piket senin
     var urlSenin =
-    Uri.http("127.0.0.1", "/scr_wikrama/display_piketSenin.php", {'q': '{http}'});
+    Uri.http("127.0.0.1", "/scr_wikrama/students/display_piketSenin.php", {'q': '{http}'});
     var responseSenin = await http.post(urlSenin,
         body: {
           "id_ruang": id_ruang,
@@ -45,7 +45,7 @@ class _DetailPSState extends State<DetailPS> {
     );
 
     var urlSelasa =
-    Uri.http("127.0.0.1", "/scr_wikrama/display_piketSelasa.php", {'q': '{http}'});
+    Uri.http("127.0.0.1", "/scr_wikrama/students/display_piketSelasa.php", {'q': '{http}'});
     var responseSelasa = await http.post(urlSelasa,
         body: {
           "id_ruang": id_ruang,
@@ -56,7 +56,7 @@ class _DetailPSState extends State<DetailPS> {
     );
 
     var urlRabu =
-    Uri.http("127.0.0.1", "/scr_wikrama/display_piketRabu.php", {'q': '{http}'});
+    Uri.http("127.0.0.1", "/scr_wikrama/students/display_piketRabu.php", {'q': '{http}'});
     var responseRabu = await http.post(urlRabu,
         body: {
           "id_ruang": id_ruang,
@@ -67,7 +67,7 @@ class _DetailPSState extends State<DetailPS> {
     );
 
     var urlKamis =
-    Uri.http("127.0.0.1", "/scr_wikrama/display_piketKamis.php", {'q': '{http}'});
+    Uri.http("127.0.0.1", "/scr_wikrama/students/display_piketKamis.php", {'q': '{http}'});
     var responseKamis = await http.post(urlKamis,
         body: {
           "id_ruang": id_ruang,
@@ -78,7 +78,7 @@ class _DetailPSState extends State<DetailPS> {
     );
 
     var urlJumat =
-    Uri.http("127.0.0.1", "/scr_wikrama/display_piketJumat.php", {'q': '{http}'});
+    Uri.http("127.0.0.1", "/scr_wikrama/students/display_piketJumat.php", {'q': '{http}'});
     var responseJumat = await http.post(urlJumat,
         body: {
           "id_ruang": id_ruang,

@@ -37,7 +37,7 @@ class _PiketRayonState extends State<PiketRayon> {
 
    Future<void> _displaySiswa() async { // login
      var url =
-     Uri.http("127.0.0.1", "/scr_wikrama/displayStudents.php", {'q': '{http}'});
+     Uri.http("127.0.0.1", "/scr_wikrama/students/displayStudents.php", {'q': '{http}'});
      var response = await http.post(
          url,
          body: {

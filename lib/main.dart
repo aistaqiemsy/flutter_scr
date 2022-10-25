@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _onLogin() async { // login
     var url =
-        Uri.http("127.0.0.1", "/scr_wikrama/login.php", {'q': '{http}'});
+        Uri.http("127.0.0.1", "/scr_wikrama/lib_ps/login.php", {'q': '{http}'});
     var response = await http.post(
         url,
         body: {
