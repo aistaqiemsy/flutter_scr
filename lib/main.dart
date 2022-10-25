@@ -39,52 +39,38 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _password = new TextEditingController();
   List userLogin = [];
 
-  // ModelPembimbing _modelPembimbing = new ModelPembimbing();
-
-  // Future<List<ModelPembimbing>> _futureLogin() async {
-  //     var url =
-  //         Uri.http("127.0.0.1", "/scr_wikrama/login.php", {'q': '{http}'});
-  //     var response = await http.post(url,
-  //         body: {"username": _username.text, "password": _password.text},
-  //         headers: {
-  //           "Access-Control-Allow-Methods": "POST, OPTIONS"
-  //         }
-  //     );
-  //
-  //   List getData = jsonDecode(response.body) as List<dynamic>;
-  //   userLogin = getData;
-  //   return userLogin
-  //           .map((e) => ModelPembimbing.fromJson(e)).toList();
-  // }
-
-  Future<void> _onLogin() async { // login tanpa model
+  Future<void> _onLogin() async { // login
     var url =
         Uri.http("127.0.0.1", "/scr_wikrama/login.php", {'q': '{http}'});
-    var response = await http.post(url,
-        body: {"username": _username.text, "password": _password.text},
+    var response = await http.post(
+        url,
+        body: {
+          "username": _username.text,
+          "password": _password.text
+        },
         headers: {
           "Access-Control-Allow-Methods": "POST, OPTIONS"
         }
-    );
+      );
 
-      if (response.statusCode == 200) {
-        userLogin = jsonDecode(response.body);
-        // _mb = ModelPembimbing.fromJson(userLogin);
-
-        print(userLogin);
-
-        Navigator.push(
+        if (response.statusCode == 200) {
+          userLogin = jsonDecode(response.body);
+          print(userLogin);
+          Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) =>
                     DashboardPs(userLogin: userLogin)
-                    ),
-        );
-        _username.clear();
-        _password.clear();
-      } else {
-        print("Koneksi gagal!");
-      }
+                  ),
+                );
+
+          _username.clear();
+          _password.clear();
+
+
+        } else {
+          print("Koneksi gagal!");
+        }
 
   }
 
@@ -145,18 +131,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: EdgeInsets.only(right: 15, left: 15, bottom: 10),
                 child: ElevatedButton(
                     onPressed: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => DashboardPs(
-                      //             userLogin: [userLogin],
-                      //     ),
-                      // )
-                      // );
-
                       print("\nDEBUG : \n");
                       _onLogin();
-                      // _futureLogin();
                     },
                     child: Padding(
                       padding: EdgeInsets.all(10),

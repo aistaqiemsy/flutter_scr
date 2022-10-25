@@ -6,41 +6,41 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
 
 class JadwalPiketRayon extends StatefulWidget {
-  const JadwalPiketRayon({super.key, required this.piketSiswa});
-  final List piketSiswa;
+  const JadwalPiketRayon({
+    super.key,
+    required this.id_ruang,
+    required this.senin,
+    required this.selasa,
+    required this.rabu,
+    required this.kamis,
+    required this.jumat
+  });
+  final String id_ruang;
+  final List senin, selasa, rabu, kamis, jumat;
 
   @override
-  State<JadwalPiketRayon> createState() => _JadwalPiketRayonState();
-
+  State<JadwalPiketRayon> createState() => _JadwalPiketRayonState(
+      id_ruang: id_ruang,
+      senin: senin,
+      selasa: selasa,
+      rabu: rabu,
+      kamis: kamis,
+      jumat: jumat
+  );
 }
 
 class _JadwalPiketRayonState extends State<JadwalPiketRayon> {
-  final List nama_petugas = ["Andi", "Dika", "Rani", "Budi", "Rena"];
-  final List day = ["Senin", "Selasa", "Rabu", "Kamis", "Jum'at"];
+  _JadwalPiketRayonState({
+    required this.id_ruang,
+    required this.senin,
+    required this.selasa,
+    required this.rabu,
+    required this.kamis,
+    required this.jumat
+  });
+  final String id_ruang;
+  List senin, selasa, rabu, kamis, jumat;
 
-
-  late List _dataSenin;
-  Future<void> _getSenin() async {
-    var url =
-    Uri.http("127.0.0.1", "/scr_wikrama/display_piket_rayon.php", {'q': '{http}'});
-    var response = await http.post(url,
-        body: {"username": "Senin", "password": "Senin"},
-        headers: {
-          "Access-Control-Allow-Methods": "POST, OPTIONS"
-        }
-    );
-
-    if (response.statusCode == 200) {
-      _dataSenin = jsonDecode(response.body);
-      var data = JadwalPiketRayon(
-          piketSiswa: _dataSenin
-      );
-
-      print(_dataSenin);
-    } else {
-      print("Koneksi gagal!");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,24 +50,125 @@ class _JadwalPiketRayonState extends State<JadwalPiketRayon> {
         title: Text("Jadwal Piket Rayon"),
       ),
       body: ListView.builder(
-        itemCount: nama_petugas.length,
+        itemCount: 1,
         itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.only(right: 10, left: 10),
-            child: Card(
-              elevation: 5,
-                  child: Column(
-                    children: [
-                      ListTile(
-                        title: Text(day[index]),
-                        subtitle: Text(nama_petugas[index]),
-                      )
-                    ],
-                  ),
+          return Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: Center(
+                  child: Text("SENIN"),
                 ),
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: senin.length,
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      Container(
+                        width: 200,
+                        child: Text(""+senin[index]["nama"]),
+                      ),
+                      Text(""+senin[index]["rombel"])
+                    ],
+                  );
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: Center(
+                  child: Text("SELASA"),
+                ),
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: selasa.length,
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      Container(
+                        width: 200,
+                        child: Text(""+selasa[index]["nama"]),
+                      ),
+                      Text(""+selasa[index]["rombel"])
+                    ],
+                  );
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: Center(
+                  child: Text("RABU"),
+                ),
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: rabu.length,
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      Container(
+                        width: 200,
+                        child: Text(""+rabu[index]["nama"]),
+                      ),
+                      Text(""+rabu[index]["rombel"])
+                    ],
+                  );
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: Center(
+                  child: Text("KAMIS"),
+                ),
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: kamis.length,
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      Container(
+                        width: 200,
+                        child: Text(""+kamis[index]["nama"]),
+                      ),
+                      Text(""+kamis[index]["rombel"])
+                    ],
+                  );
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: Center(
+                  child: Text("JUM'AT"),
+                ),
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: jumat.length,
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      Container(
+                        width: 200,
+                        child: Text(""+jumat[index]["nama"]),
+                      ),
+                      Text(""+jumat[index]["rombel"])
+                    ],
+                  );
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 20),
+                child: Center(
+                  child: Text(""),
+                ),
+              ),
+            ],
           );
         },
-      ),
+      )
     );
   }
 }

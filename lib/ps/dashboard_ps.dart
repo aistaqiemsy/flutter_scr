@@ -1,6 +1,5 @@
 // import 'dart:html';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:scr_wikrama/ps/piket_rayon.dart';
 
@@ -42,16 +41,18 @@ class DashboardPs extends StatelessWidget {
                         elevation: 2,
                         child: InkWell(
                           onTap: () {
+
+                            print(userLogin[index]["id_ruang"]);
+
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => PiketRayon(
                                       userLogin: userLogin,
+                                      id_ruang: userLogin[index]["id_ruang"],
                                     )
                                 )
                             );
-
-                            print(userLogin);
                           },
                           child: Padding(
                             padding: EdgeInsets.only(top: 10, bottom: 10, left: 15),
