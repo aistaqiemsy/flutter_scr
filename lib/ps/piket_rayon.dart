@@ -7,6 +7,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:scr_wikrama/dir_siswa/display_students.dart';
 import 'package:http/http.dart' as http;
 import 'package:scr_wikrama/ps/detail_ps.dart';
+import 'package:scr_wikrama/ps/rekap_piket.dart';
 
 class PiketRayon extends StatefulWidget {
   const PiketRayon({
@@ -35,7 +36,7 @@ class _PiketRayonState extends State<PiketRayon> {
     final dynamic id_ruang;
     late List displaySiswa;
 
-   Future<void> _displaySiswa() async { // login
+   Future<void> _displaySiswa() async { // tampilkan data siswa per rayon
      var url =
      Uri.http("127.0.0.1", "/scr_wikrama/students/displayStudents.php", {'q': '{http}'});
      var response = await http.post(
@@ -140,14 +141,6 @@ class _PiketRayonState extends State<PiketRayon> {
                             onTap: () {
                               print("\nDEBUG : \n");
                               _displaySiswa();
-
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => DisplayStudent(
-                              //           students: [],
-                              //         )
-                              //     ));
                             },
                             child: Column(
                               children: [
