@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
+import 'package:scr_wikrama/ps/tambah_piket_harian.dart';
 
 class RekapPiket extends StatefulWidget {
   const RekapPiket({super.key, required this.rekapPiket});
@@ -97,7 +98,13 @@ class _RekapPiketState extends State<RekapPiket> {
           Icons.post_add_outlined
         ),
         onPressed: () {
-          print("Add Piket");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    TambahPiketHarian()
+                  ),
+                );
         },
       ),
     );
