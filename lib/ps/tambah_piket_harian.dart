@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
+import 'package:scr_wikrama/ps/rekap_piket.dart';
 
 class TambahPiketHarian extends StatefulWidget {
   const TambahPiketHarian(
@@ -289,7 +290,7 @@ class _TambahPiketHarianState extends State<TambahPiketHarian> {
                   EdgeInsets.only(top: 15, left: 100, right: 100, bottom: 20),
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: getRuang.length,
+                itemCount: 1,
                 itemBuilder: (context, index) {
                   return ElevatedButton(
                     style: ButtonStyle(

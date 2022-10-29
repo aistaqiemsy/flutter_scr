@@ -1,22 +1,134 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
 import 'package:scr_wikrama/ps/tambah_piket_harian.dart';
+import 'package:http/http.dart' as http;
 
 class RekapPiket extends StatefulWidget {
-  const RekapPiket({super.key, required this.rekapPiket, required this.idRuang});
+  const RekapPiket(
+      {super.key, required this.rekapPiket, required this.idRuang});
   final List rekapPiket;
   final String idRuang;
 
   @override
-  State<RekapPiket> createState() => _RekapPiketState(rekap: rekapPiket, id_ruang: idRuang);
+  State<RekapPiket> createState() =>
+      _RekapPiketState(rekap: rekapPiket, id_ruang: idRuang);
 }
 
 class _RekapPiketState extends State<RekapPiket> {
   _RekapPiketState({required this.rekap, required this.id_ruang});
   List rekap;
   String id_ruang;
+
+  static const List<String> list = <String>["-", "V"];
+  String _valueSapuLantai = list.first;
+  String _valueLapKaca = list.first;
+  String _valuepelLantai = list.first;
+  String _valueMejaKursi = list.first;
+  String _valueCleanSampah = list.first;
+  String _valueLapKomputer = list.first;
+  String _valueSaklar = list.first;
+
+  TextEditingController _idRuangController = new TextEditingController();
+  TextEditingController _tglController = new TextEditingController();
+  TextEditingController _checkerController = new TextEditingController();
+
+  Future<void> _simpanPiket() async {
+    print(_valueSapuLantai);
+    var url = Uri.http("127.0.0.1",
+        "/scr_wikrama/students/piket/tambah_piket_harian.php", {'q': '{http}'});
+    var response = await http.post(url, body: {
+      "id_ruang": _idRuangController.text,
+      "tgl": _tglController.text,
+      "checker": _checkerController.text,
+      "sapu": _valueSapuLantai,
+      "lap": _valueLapKaca,
+      "pel": _valuepelLantai,
+      "meja": _valueMejaKursi,
+      "clean": _valueCleanSampah,
+      "lap_pc": _valueLapKaca,
+      "lampu": _valueSaklar,
+    }, headers: {
+      "Access-Control-Allow-Methods": "POST, OPTIONS"
+    });
+
+    if (response.statusCode == 200) {
+      var simpanSiswa = jsonDecode(response.body);
+      print(simpanSiswa);
+
+      showDialog(
+          //tampilkan pesan tambah data lagi atau tidak
+          context: context,
+          builder: (BuildContext content) {
+            return Expanded(
+                child: AlertDialog(
+              content: ListTile(
+                leading: Icon(
+                  Icons.info,
+                  color: Colors.lightGreenAccent[600],
+                ),
+                title: Text(
+                  "Data berhasil disimpan!",
+                  style: TextStyle(color: Colors.brown[400]),
+                ),
+              ),
+              actions: [
+                ElevatedButton(
+                    child: Text(
+                      "Iya",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      print("Tombol iya ditekan...");
+                    }),
+                ElevatedButton(
+                    child: Text(
+                      "Tidak",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      print("Tombol tidak ditekan...");
+                      
+                      _refreshPiket();
+                      Navigator.pop(context);
+                    })
+              ],
+            ));
+          });
+    } else {
+      print("Koneksi gagal!");
+    }
+  }
+
+  Future<void> _refreshPiket() async {
+    // fungsi panggil rekap piket per rayon untuk refresh
+    var url = Uri.http("localhost",
+        "/scr_wikrama/students/displayRekapPiketRayon.php", {'q': '{http}'});
+    try {
+      // var response = await http.get(url);
+      var response = await http.post(url, body: {"id_ruang": id_ruang});
+
+      setState(() {
+        rekap = jsonDecode(response.body);
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void _refreshData() {
+    _refreshPiket();
+  }
+
+  FutureOr onGoBack(dynamic value) {
+    // fungsi untuk saat kembali dari screen, maka refresh screen
+    _refreshData();
+    setState(() {});
+  }
 
   //format tanggal ke hari
   String formatHari(String tanggal) {
@@ -64,6 +176,14 @@ class _RekapPiketState extends State<RekapPiket> {
   }
 
   @override
+  void initState() {
+    _idRuangController.text = id_ruang;
+    _refreshPiket();
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -98,16 +218,244 @@ class _RekapPiketState extends State<RekapPiket> {
         backgroundColor: Colors.amber[900],
         child: Icon(Icons.post_add_outlined),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => TambahPiketHarian(
-                      getRuang: rekap,
-                      idRuang: id_ruang,
-                    )),
-          );
+          _tambahPiketHarian();
+
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //       builder: (context) => TambahPiketHarian(
+          //             getRuang: rekap,
+          //             idRuang: id_ruang,
+          //           )),
+          // );
         },
       ),
     );
+  }
+
+  _tambahPiketHarian() {
+    showDialog(
+        context: context,
+        builder: (BuildContext content) {
+          return ListView.builder(
+            itemCount: 1,
+            itemBuilder: (content, index) {
+              return Expanded(
+                  child: AlertDialog(
+                title: Text("Tambah Data"),
+                content: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 5),
+                      child: TextFormField(
+                        controller: _idRuangController,
+                        enabled: false,
+                        decoration: InputDecoration(
+                            hintText: ("Ruang"),
+                            icon: Icon(Icons.meeting_room_rounded),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 5),
+                      child: TextFormField(
+                        controller: _tglController,
+                        decoration: InputDecoration(
+                            hintText: ("Tanggal Piket"),
+                            icon: Icon(Icons.date_range_outlined),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 5),
+                      child: TextFormField(
+                        controller: _checkerController,
+                        decoration: InputDecoration(
+                          hintText: ("Saksi ( Nama PS / PJ )"),
+                          icon: Icon(Icons.account_circle_sharp),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                        padding: EdgeInsets.only(bottom: 5),
+                        child: DropdownButtonFormField(
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                                filled: true,
+                                hintText: 'Sapu Lantai'),
+                            items: list
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _valueSapuLantai = value!;
+                              });
+                            })),
+                    Padding(
+                        padding: EdgeInsets.only(bottom: 5),
+                        child: DropdownButtonFormField(
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                                filled: true,
+                                hintText: 'Lap Kaca'),
+                            items: list
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _valueLapKaca = value!;
+                              });
+                            })),
+                    Padding(
+                        padding: EdgeInsets.only(bottom: 5),
+                        child: DropdownButtonFormField(
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                                filled: true,
+                                hintText: 'Pel Lantai'),
+                            items: list
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _valuepelLantai = value!;
+                              });
+                            })),
+                    Padding(
+                        padding: EdgeInsets.only(bottom: 5),
+                        child: DropdownButtonFormField(
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                                filled: true,
+                                hintText: 'Merapikan Meja dan Kursi'),
+                            items: list
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _valueMejaKursi = value!;
+                              });
+                            })),
+                    Padding(
+                        padding: EdgeInsets.only(bottom: 5),
+                        child: DropdownButtonFormField(
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                                filled: true,
+                                hintText: 'Membersihkan Sampah'),
+                            items: list
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _valueCleanSampah = value!;
+                              });
+                            })),
+                    Padding(
+                        padding: EdgeInsets.only(bottom: 5),
+                        child: DropdownButtonFormField(
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                                filled: true,
+                                hintText: 'Lap Komputer'),
+                            items: list
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _valueLapKomputer = value!;
+                              });
+                            })),
+                    Padding(
+                        padding: EdgeInsets.only(bottom: 5),
+                        child: DropdownButtonFormField(
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                                filled: true,
+                                hintText: 'Lampu, Saklar dan Komputer Mati'),
+                            items: list
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _valueSaklar = value!;
+                              });
+                            })),
+                  ],
+                ),
+                actions: [
+                  ElevatedButton(
+                      child: Text(
+                        "Simpan",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        print("Menyimpan data...");
+                        _simpanPiket();
+
+                        // _getData(); // untuk mereload data
+
+                        Navigator.pop(context);
+                      }),
+                  ElevatedButton(
+                      child: Text(
+                        "Kembali",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        print("Tombol kembali ditekan...");
+                      })
+                ],
+              ));
+            },
+          );
+        });
   }
 }
