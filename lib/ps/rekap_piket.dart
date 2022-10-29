@@ -5,59 +5,61 @@ import 'package:intl/intl.dart';
 import 'package:scr_wikrama/ps/tambah_piket_harian.dart';
 
 class RekapPiket extends StatefulWidget {
-  const RekapPiket({super.key, required this.rekapPiket});
+  const RekapPiket({super.key, required this.rekapPiket, required this.idRuang});
   final List rekapPiket;
+  final String idRuang;
 
   @override
-  State<RekapPiket> createState() => _RekapPiketState(rekap: rekapPiket);
+  State<RekapPiket> createState() => _RekapPiketState(rekap: rekapPiket, id_ruang: idRuang);
 }
 
 class _RekapPiketState extends State<RekapPiket> {
-  _RekapPiketState({required this.rekap});
+  _RekapPiketState({required this.rekap, required this.id_ruang});
   List rekap;
+  String id_ruang;
 
   //format tanggal ke hari
   String formatHari(String tanggal) {
-     DateTime dateTime = DateFormat("yyyy-MM-dd").parse(tanggal); 
-     var day = DateFormat('EEEE').format(dateTime);
-      var hari = "";
-      switch (day) {
-        case 'Sunday':
-          {
-            hari = "Minggu";
-          }
-          break;
-        case 'Monday':
-          {
-            hari = "Senin";
-          }
-          break;
-        case 'Tuesday':
-          {
-            hari = "Selasa";
-          }
-          break;
-        case 'Wednesday':
-          {
-            hari = "Rabu";
-          }
-          break;
-        case 'Thursday':
-          {
-            hari = "Kamis";
-          }
-          break;
-        case 'Friday':
-          {
-            hari = "Jumat";
-          }
-          break;
-        case 'Saturday':
-          {
-            hari = "Sabtu";
-          }
-          break;
-      }
+    DateTime dateTime = DateFormat("yyyy-MM-dd").parse(tanggal);
+    var day = DateFormat('EEEE').format(dateTime);
+    var hari = "";
+    switch (day) {
+      case 'Sunday':
+        {
+          hari = "Minggu";
+        }
+        break;
+      case 'Monday':
+        {
+          hari = "Senin";
+        }
+        break;
+      case 'Tuesday':
+        {
+          hari = "Selasa";
+        }
+        break;
+      case 'Wednesday':
+        {
+          hari = "Rabu";
+        }
+        break;
+      case 'Thursday':
+        {
+          hari = "Kamis";
+        }
+        break;
+      case 'Friday':
+        {
+          hari = "Jumat";
+        }
+        break;
+      case 'Saturday':
+        {
+          hari = "Sabtu";
+        }
+        break;
+    }
     return hari;
   }
 
@@ -94,17 +96,16 @@ class _RekapPiketState extends State<RekapPiket> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.amber[900],
-        child: Icon(
-          Icons.post_add_outlined
-        ),
+        child: Icon(Icons.post_add_outlined),
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    TambahPiketHarian()
-                  ),
-                );
+                builder: (context) => TambahPiketHarian(
+                      getRuang: rekap,
+                      idRuang: id_ruang,
+                    )),
+          );
         },
       ),
     );

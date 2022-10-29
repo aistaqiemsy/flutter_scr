@@ -115,6 +115,7 @@ class _DetailPSState extends State<DetailPS> {
       context,
       MaterialPageRoute(builder: (context) => RekapPiket(
         rekapPiket: _rekapPiketRayon,
+        idRuang: id_ruang,
       )),
     );
   }
