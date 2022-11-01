@@ -27,8 +27,6 @@ class _RekapPiketState extends State<RekapPiket> {
   String id_ruang;
 
   //setting state tanggal
-  late String _dateCount;
-  late String _range;
   late DateTime _tglController;
 
   static const List<String> list = <String>["-", "V"];
@@ -42,6 +40,7 @@ class _RekapPiketState extends State<RekapPiket> {
 
   TextEditingController _idRuangController = new TextEditingController();
   TextEditingController _checkerController = new TextEditingController();
+  TextEditingController _ketController = new TextEditingController();
 
   Future<void> _simpanPiket() async {
     var url = Uri.http("localhost",
@@ -57,6 +56,7 @@ class _RekapPiketState extends State<RekapPiket> {
       "clean": _valueCleanSampah,
       "lap_pc": _valueLapKaca,
       "lampu": _valueSaklar,
+      "ket_lain": _ketController.text
     }, headers: {
       "Access-Control-Allow-Methods": "POST, OPTIONS"
     });
@@ -176,9 +176,6 @@ class _RekapPiketState extends State<RekapPiket> {
   void initState() {
     _idRuangController.text = id_ruang;
     _refreshPiket();
-
-    _dateCount = '';
-    _range = '';
 
     super.initState();
   }
@@ -484,6 +481,7 @@ class _RekapPiketState extends State<RekapPiket> {
                     Padding(
                         padding: EdgeInsets.only(bottom: 5),
                         child: TextField(
+                          controller: _ketController,
                           maxLines: 6,
                           minLines: 1,
                           expands: false,
