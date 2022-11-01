@@ -39,39 +39,29 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _password = new TextEditingController();
   List userLogin = [];
 
-  Future<void> _onLogin() async { // login
-    var url =
-        Uri.http("127.0.0.1", "/scr_wikrama/lib_ps/login.php", {'q': '{http}'});
-    var response = await http.post(
-        url,
-        body: {
-          "username": _username.text,
-          "password": _password.text
-        },
-        headers: {
-          "Access-Control-Allow-Methods": "POST, OPTIONS"
-        }
+  Future<void> _onLogin() async {
+    // login
+    var url = // gunakakan IP komputer saat debug ke physical device
+        Uri.http(
+            "localhost", "/scr_wikrama/lib_ps/login.php", {'q': '{http}'});
+    var response = await http.post(url,
+        body: {"username": _username.text, "password": _password.text},
+        headers: {"Access-Control-Allow-Methods": "POST, OPTIONS"});
+
+    if (response.statusCode == 200) {
+      userLogin = jsonDecode(response.body);
+      print(userLogin);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => DashboardPs(userLogin: userLogin)),
       );
 
-        if (response.statusCode == 200) {
-          userLogin = jsonDecode(response.body);
-          print(userLogin);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    DashboardPs(userLogin: userLogin)
-                  ),
-                );
-
-          _username.clear();
-          _password.clear();
-
-
-        } else {
-          print("Koneksi gagal!");
-        }
-
+      _username.clear();
+      _password.clear();
+    } else {
+      print("Koneksi gagal!");
+    }
   }
 
   @override
@@ -128,28 +118,25 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Padding(
-                padding: EdgeInsets.only(right: 15, left: 15, bottom: 10),
-                child: ElevatedButton(
-                    onPressed: () {
-                      print("\nDEBUG : \n");
-                      _onLogin();
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text("Masuk"),
-                    ),
+              padding: EdgeInsets.only(right: 15, left: 15, bottom: 10),
+              child: ElevatedButton(
+                onPressed: () {
+                  print("\nDEBUG : \n");
+                  _onLogin();
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text("Masuk"),
                 ),
+              ),
             ),
-
-
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(
-                builder: (context) => MainMenu()));
+              context, MaterialPageRoute(builder: (context) => MainMenu()));
         },
         child: const Icon(Icons.logout_outlined),
       ),

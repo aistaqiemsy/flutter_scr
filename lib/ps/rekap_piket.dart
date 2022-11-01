@@ -7,6 +7,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
 import 'package:scr_wikrama/ps/tambah_piket_harian.dart';
 import 'package:http/http.dart' as http;
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 class RekapPiket extends StatefulWidget {
   const RekapPiket(
@@ -24,6 +26,11 @@ class _RekapPiketState extends State<RekapPiket> {
   List rekap;
   String id_ruang;
 
+  //setting state tanggal
+  late String _dateCount;
+  late String _range;
+  late DateTime _tglController;
+
   static const List<String> list = <String>["-", "V"];
   String _valueSapuLantai = list.first;
   String _valueLapKaca = list.first;
@@ -34,16 +41,14 @@ class _RekapPiketState extends State<RekapPiket> {
   String _valueSaklar = list.first;
 
   TextEditingController _idRuangController = new TextEditingController();
-  TextEditingController _tglController = new TextEditingController();
   TextEditingController _checkerController = new TextEditingController();
 
   Future<void> _simpanPiket() async {
-    print(_valueSapuLantai);
-    var url = Uri.http("127.0.0.1",
+    var url = Uri.http("localhost",
         "/scr_wikrama/students/piket/tambah_piket_harian.php", {'q': '{http}'});
     var response = await http.post(url, body: {
       "id_ruang": _idRuangController.text,
-      "tgl": _tglController.text,
+      "tgl": _tglController.toString(),
       "checker": _checkerController.text,
       "sapu": _valueSapuLantai,
       "lap": _valueLapKaca,
@@ -79,23 +84,15 @@ class _RekapPiketState extends State<RekapPiket> {
               actions: [
                 ElevatedButton(
                     child: Text(
-                      "Iya",
+                      "OK",
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () {
-                      print("Tombol iya ditekan...");
-                    }),
-                ElevatedButton(
-                    child: Text(
-                      "Tidak",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      print("Tombol tidak ditekan...");
-                      
-                      _refreshPiket();
+                      _refreshPiket(); // panggil fungsi refresh data
+
+                      print("Tombol ['OK'] ditekan...");
                       Navigator.pop(context);
-                    })
+                    }),
               ],
             ));
           });
@@ -180,6 +177,9 @@ class _RekapPiketState extends State<RekapPiket> {
     _idRuangController.text = id_ruang;
     _refreshPiket();
 
+    _dateCount = '';
+    _range = '';
+
     super.initState();
   }
 
@@ -248,33 +248,64 @@ class _RekapPiketState extends State<RekapPiket> {
                     Padding(
                       padding: EdgeInsets.only(bottom: 5),
                       child: TextFormField(
+                        style: TextStyle(
+                          fontSize: 14
+                        ),
                         controller: _idRuangController,
                         enabled: false,
                         decoration: InputDecoration(
+                            suffixIcon: InkWell(
+                              child: Icon(Icons.info),
+                              onTap: () {
+                                print("informasi tentang otomatis room");
+                              },
+                            ),
                             hintText: ("Ruang"),
-                            icon: Icon(Icons.meeting_room_rounded),
                             border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10))),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.amber))),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 5),
-                      child: TextFormField(
-                        controller: _tglController,
-                        decoration: InputDecoration(
-                            hintText: ("Tanggal Piket"),
-                            icon: Icon(Icons.date_range_outlined),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10))),
-                      ),
-                    ),
+                        padding: EdgeInsets.only(bottom: 5),
+                        child: DateTimeField(
+                          style: TextStyle(
+                          fontSize: 14
+                        ),
+                          decoration: InputDecoration(
+                            suffixIcon: Icon(
+                              Icons.date_range
+                            ),
+                          ),
+                          initialValue: DateTime.now(),
+                          format: DateFormat("yyyy-MM-dd"),
+                          onShowPicker: (context, currentValue) async {
+                            final date = await showDatePicker(
+                              context: context,
+                              initialDate: currentValue ?? DateTime.now(),
+                              firstDate: DateTime(1998),
+                              lastDate: DateTime(2025),
+                            );
+                            if (date != null) {
+                              return _tglController = DateTime.now();
+                            }
+                            return currentValue;
+                          },
+                        )),
                     Padding(
                       padding: EdgeInsets.only(bottom: 5),
                       child: TextFormField(
+                        style: TextStyle(
+                          fontSize: 14
+                        ),
                         controller: _checkerController,
                         decoration: InputDecoration(
                           hintText: ("Saksi ( Nama PS / PJ )"),
-                          icon: Icon(Icons.account_circle_sharp),
+                          suffixIcon: Icon(
+                              Icons.person_pin
+                            ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -284,6 +315,9 @@ class _RekapPiketState extends State<RekapPiket> {
                     Padding(
                         padding: EdgeInsets.only(bottom: 5),
                         child: DropdownButtonFormField(
+                          style: TextStyle(
+                          fontSize: 14
+                        ),
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius:
@@ -305,6 +339,9 @@ class _RekapPiketState extends State<RekapPiket> {
                     Padding(
                         padding: EdgeInsets.only(bottom: 5),
                         child: DropdownButtonFormField(
+                          style: TextStyle(
+                          fontSize: 14
+                        ),
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius:
@@ -326,6 +363,9 @@ class _RekapPiketState extends State<RekapPiket> {
                     Padding(
                         padding: EdgeInsets.only(bottom: 5),
                         child: DropdownButtonFormField(
+                          style: TextStyle(
+                          fontSize: 14
+                        ),
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius:
@@ -347,6 +387,9 @@ class _RekapPiketState extends State<RekapPiket> {
                     Padding(
                         padding: EdgeInsets.only(bottom: 5),
                         child: DropdownButtonFormField(
+                          style: TextStyle(
+                          fontSize: 14
+                        ),
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius:
@@ -368,6 +411,9 @@ class _RekapPiketState extends State<RekapPiket> {
                     Padding(
                         padding: EdgeInsets.only(bottom: 5),
                         child: DropdownButtonFormField(
+                          style: TextStyle(
+                          fontSize: 14
+                        ),
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius:
@@ -389,6 +435,9 @@ class _RekapPiketState extends State<RekapPiket> {
                     Padding(
                         padding: EdgeInsets.only(bottom: 5),
                         child: DropdownButtonFormField(
+                          style: TextStyle(
+                          fontSize: 14
+                        ),
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius:
@@ -410,6 +459,9 @@ class _RekapPiketState extends State<RekapPiket> {
                     Padding(
                         padding: EdgeInsets.only(bottom: 5),
                         child: DropdownButtonFormField(
+                          style: TextStyle(
+                          fontSize: 14
+                        ),
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius:
@@ -428,6 +480,21 @@ class _RekapPiketState extends State<RekapPiket> {
                                 _valueSaklar = value!;
                               });
                             })),
+                    
+                    Padding(
+                        padding: EdgeInsets.only(bottom: 5),
+                        child: TextField(
+                          maxLines: 6,
+                          minLines: 1,
+                          expands: false,
+                          decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                                filled: true,
+                                hintText: 'Keterangan piket hari ini'),
+                        )
+                      ),
                   ],
                 ),
                 actions: [
@@ -440,6 +507,8 @@ class _RekapPiketState extends State<RekapPiket> {
                         print("Menyimpan data...");
                         _simpanPiket();
 
+                        print(_tglController);
+
                         // _getData(); // untuk mereload data
 
                         Navigator.pop(context);
@@ -451,6 +520,7 @@ class _RekapPiketState extends State<RekapPiket> {
                       ),
                       onPressed: () {
                         print("Tombol kembali ditekan...");
+                        Navigator.pop(context);
                       })
                 ],
               ));

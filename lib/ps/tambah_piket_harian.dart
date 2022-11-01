@@ -37,7 +37,7 @@ class _TambahPiketHarianState extends State<TambahPiketHarian> {
 
   Future<void> _simpanPiket() async {
     print(_valueSapuLantai);
-    var url = Uri.http("127.0.0.1",
+    var url = Uri.http("10.10.9.81",
         "/scr_wikrama/students/piket/tambah_piket_harian.php", {'q': '{http}'});
     var response = await http.post(url, body: {
       "id_ruang": _idRuang.text,
