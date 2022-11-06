@@ -84,7 +84,7 @@ class _PiketRayonState extends State<PiketRayon> {
           return Column(
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 15),
+                padding: EdgeInsets.only(top: 30, bottom: 15),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -207,20 +207,6 @@ class _PiketRayonState extends State<PiketRayon> {
                   ],
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 15, right: 5, left: 5),
-                child: Card(
-                  color: Colors.amber[50],
-                  elevation: 3,
-                  child: InkWell(
-                    onTap: () {},
-                    child: ListTile(
-                      title: Text("Rekap Piket"),
-                      subtitle: Text("134, 206, 207, 210, 322, 323"),
-                    ),
-                  ),
-                ),
-              )
             ],
           );
         },

@@ -6,6 +6,7 @@ import 'package:scr_wikrama/dir_siswa/display_students.dart';
 import 'package:scr_wikrama/main_menu.dart';
 import 'package:scr_wikrama/model_pembimbing.dart';
 import 'package:scr_wikrama/ps/dashboard_ps.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
@@ -41,6 +42,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _onLogin() async {
     // login
+    // var url = // server wikrama
+    //     Uri.http(
+    //         "10.20.30.100:812", "/scr_wikrama/lib_ps/login.php", {'q': '{http}'});
+
     var url = // gunakakan IP komputer saat debug ke physical device
         Uri.http(
             "localhost", "/scr_wikrama/lib_ps/login.php", {'q': '{http}'});
@@ -49,6 +54,20 @@ class _MyHomePageState extends State<MyHomePage> {
         headers: {"Access-Control-Allow-Methods": "POST, OPTIONS"});
 
     if (response.statusCode == 200) {
+      
+      ScaffoldMessenger
+        .of(context)
+          .showSnackBar(SnackBar(
+            content: Text(
+              "Autentikasi berhasil!",
+              style: TextStyle(
+                color: Colors.cyan[700],
+              ),
+              ),
+            backgroundColor: Colors.amberAccent[100],
+            )
+          );
+      
       userLogin = jsonDecode(response.body);
       print(userLogin);
       Navigator.push(
@@ -120,6 +139,9 @@ class _MyHomePageState extends State<MyHomePage> {
             Padding(
               padding: EdgeInsets.only(right: 15, left: 15, bottom: 10),
               child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.amber),
+                ),
                 onPressed: () {
                   print("\nDEBUG : \n");
                   _onLogin();

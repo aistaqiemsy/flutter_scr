@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
+import 'package:scr_wikrama/ps/detail_piket.dart';
 import 'package:scr_wikrama/ps/tambah_piket_harian.dart';
 import 'package:http/http.dart' as http;
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -194,7 +195,17 @@ class _RekapPiketState extends State<RekapPiket> {
             // elevation: 2,
             color: Colors.amber[100],
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DetailPiket(
+                        id: rekap[index]["id_piket"], 
+                        ruang: rekap[index]["id_ruang"],
+                        piket: rekap,
+                        )),
+                );
+              },
               child: ListTile(
                 title: Text(formatHari(rekap[index]["tgl_piket"])),
                 subtitle: Row(
@@ -254,7 +265,7 @@ class _RekapPiketState extends State<RekapPiket> {
                             suffixIcon: InkWell(
                               child: Icon(Icons.info),
                               onTap: () {
-                                print("informasi tentang otomatis room");
+                                print("Informasi tentang otomatis room");
                               },
                             ),
                             hintText: ("Ruang"),

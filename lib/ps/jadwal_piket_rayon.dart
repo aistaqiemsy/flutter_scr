@@ -55,109 +55,150 @@ class _JadwalPiketRayonState extends State<JadwalPiketRayon> {
           return Column(
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 10),
-                child: Center(
-                  child: Text("SENIN"),
+                  padding: EdgeInsets.only(top: 15, bottom: 10, left: 10, right: 10),
+                  child: Center(
+                    child: Text("SENIN"),
+                  ),
+                ),
+              Divider(),
+              Card(
+                elevation: 5,
+                color: Colors.amber[50],
+                child: Padding(
+                  padding: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: senin.length,
+                    itemBuilder: (context, index) {
+                      return Row(
+                        children: [
+                          Container(
+                            width: 200,
+                            child: Text(""+senin[index]["nama"]),
+                          ),
+                          Text(""+senin[index]["rombel"])
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: senin.length,
-                itemBuilder: (context, index) {
-                  return Row(
-                    children: [
-                      Container(
-                        width: 200,
-                        child: Text(""+senin[index]["nama"]),
-                      ),
-                      Text(""+senin[index]["rombel"])
-                    ],
-                  );
-                },
+              
+              Padding(
+                  padding: EdgeInsets.only(top: 15, bottom: 10, left: 10, right: 10),
+                  child: Center(
+                    child: Text("SELASA"),
+                  ),
+                ),
+              Divider(),
+              Card(
+                elevation: 5,
+                color: Colors.amber[50],
+                child: Padding(
+                  padding: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: selasa.length,
+                    itemBuilder: (context, index) {
+                      return Row(
+                        children: [
+                          Container(
+                            width: 200,
+                            child: Text(""+selasa[index]["nama"]),
+                          ),
+                          Text(""+selasa[index]["rombel"])
+                        ],
+                      );
+                    },
+                  ),
+                ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 10),
-                child: Center(
-                  child: Text("SELASA"),
+                  padding: EdgeInsets.only(top: 15, bottom: 10, left: 10, right: 10),
+                  child: Center(
+                    child: Text("RABU"),
+                  ),
                 ),
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: selasa.length,
-                itemBuilder: (context, index) {
-                  return Row(
-                    children: [
-                      Container(
-                        width: 200,
-                        child: Text(""+selasa[index]["nama"]),
-                      ),
-                      Text(""+selasa[index]["rombel"])
-                    ],
-                  );
-                },
+              Divider(),
+              Card(
+                elevation: 5,
+                color: Colors.amber[50],
+                child: Padding(
+                  padding: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: rabu.length,
+                    itemBuilder: (context, index) {
+                      return Row(
+                        children: [
+                          Container(
+                            width: 200,
+                            child: Text(""+rabu[index]["nama"]),
+                          ),
+                          Text(""+rabu[index]["rombel"])
+                        ],
+                      );
+                    },
+                  ),
+                ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 10),
-                child: Center(
-                  child: Text("RABU"),
+                  padding: EdgeInsets.only(top: 15, bottom: 10, left: 10, right: 10),
+                  child: Center(
+                    child: Text("KAMIS"),
+                  ),
                 ),
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: rabu.length,
-                itemBuilder: (context, index) {
-                  return Row(
-                    children: [
-                      Container(
-                        width: 200,
-                        child: Text(""+rabu[index]["nama"]),
-                      ),
-                      Text(""+rabu[index]["rombel"])
-                    ],
-                  );
-                },
+              Divider(),
+              Card(
+                elevation: 5,
+                color: Colors.amber[50],
+                child: Padding(
+                  padding: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: kamis.length,
+                    itemBuilder: (context, index) {
+                      return Row(
+                        children: [
+                          Container(
+                            width: 200,
+                            child: Text(""+kamis[index]["nama"]),
+                          ),
+                          Text(""+kamis[index]["rombel"])
+                        ],
+                      );
+                    },
+                  ),
+                ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 10),
-                child: Center(
-                  child: Text("KAMIS"),
+                  padding: EdgeInsets.only(top: 15, bottom: 10, left: 10, right: 10),
+                  child: Center(
+                    child: Text("JUM'AT"),
+                  ),
                 ),
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: kamis.length,
-                itemBuilder: (context, index) {
-                  return Row(
-                    children: [
-                      Container(
-                        width: 200,
-                        child: Text(""+kamis[index]["nama"]),
-                      ),
-                      Text(""+kamis[index]["rombel"])
-                    ],
-                  );
-                },
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 10),
-                child: Center(
-                  child: Text("JUM'AT"),
+              Divider(),
+              Card(
+                elevation: 5,
+                color: Colors.amber[50],
+                child: Padding(
+                  padding: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: jumat.length,
+                    itemBuilder: (context, index) {
+                      return Row(
+                        children: [
+                          Container(
+                            width: 200,
+                            child: Text(""+jumat[index]["nama"]),
+                          ),
+                          Text(""+jumat[index]["rombel"])
+                        ],
+                      );
+                    },
+                  ),
                 ),
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: jumat.length,
-                itemBuilder: (context, index) {
-                  return Row(
-                    children: [
-                      Container(
-                        width: 200,
-                        child: Text(""+jumat[index]["nama"]),
-                      ),
-                      Text(""+jumat[index]["rombel"])
-                    ],
-                  );
-                },
               ),
               Padding(
                 padding: EdgeInsets.only(bottom: 20),
