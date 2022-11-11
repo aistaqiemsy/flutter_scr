@@ -44,7 +44,13 @@ class _RekapPiketState extends State<RekapPiket> {
   TextEditingController _ketController = new TextEditingController();
 
   Future<void> _simpanPiket() async {
-    var url = Uri.http("localhost",
+    // var url = // server wikrama
+    //     Uri.http(
+    //         "10.20.30.100:812", 
+    //         "/scr_wikrama/students/piket/tambah_piket_harian.php", {'q': '{http}'});
+
+    var url = // server lokal
+      Uri.http("localhost",
         "/scr_wikrama/students/piket/tambah_piket_harian.php", {'q': '{http}'});
     var response = await http.post(url, body: {
       "id_ruang": _idRuangController.text,
@@ -104,7 +110,14 @@ class _RekapPiketState extends State<RekapPiket> {
 
   Future<void> _refreshPiket() async {
     // fungsi panggil rekap piket per rayon untuk refresh
-    var url = Uri.http("localhost",
+    
+    // var url = // server wikrama
+    //     Uri.http(
+    //         "10.20.30.100:812", 
+    //         "/scr_wikrama/students/displayRekapPiketRayon.php", {'q': '{http}'});
+
+    var url = // server lokal 
+      Uri.http("localhost",
         "/scr_wikrama/students/displayRekapPiketRayon.php", {'q': '{http}'});
     try {
       // var response = await http.get(url);
@@ -343,7 +356,8 @@ class _RekapPiketState extends State<RekapPiket> {
                               setState(() {
                                 _valueSapuLantai = value!;
                               });
-                            })),
+                            })
+                            ),
                     Padding(
                         padding: EdgeInsets.only(bottom: 5),
                         child: DropdownButtonFormField(

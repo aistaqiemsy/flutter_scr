@@ -36,6 +36,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  static const List<String> _ruang = <String>["134", "203", "206", "207", "210", "322", "323"];
+  String _setRuang = "";
+
   TextEditingController _username = new TextEditingController();
   TextEditingController _password = new TextEditingController();
   List userLogin = [];
@@ -49,8 +52,13 @@ class _MyHomePageState extends State<MyHomePage> {
     var url = // gunakakan IP komputer saat debug ke physical device
         Uri.http(
             "localhost", "/scr_wikrama/lib_ps/login.php", {'q': '{http}'});
+    
     var response = await http.post(url,
-        body: {"username": _username.text, "password": _password.text},
+        body: {
+          "username": _username.text, 
+          "password": _password.text,
+          "ruang":_setRuang
+        },
         headers: {"Access-Control-Allow-Methods": "POST, OPTIONS"});
 
     if (response.statusCode == 200) {
@@ -135,6 +143,31 @@ class _MyHomePageState extends State<MyHomePage> {
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10))),
               ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(right: 100, bottom: 10, left: 100),
+              child: DropdownButtonFormField(
+                          style: TextStyle(
+                          fontSize: 14
+                        ),
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                                filled: true,
+                                hintText: 'Ruang'),
+                            items: _ruang
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _setRuang = value!;
+                              });
+                            }),
             ),
             Padding(
               padding: EdgeInsets.only(right: 15, left: 15, bottom: 10),
