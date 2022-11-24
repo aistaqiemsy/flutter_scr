@@ -1,12 +1,6 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:scr_wikrama/api/ServicesApi.dart';
-import 'package:scr_wikrama/dir_siswa/display_students.dart';
-import 'package:scr_wikrama/main_menu.dart';
-import 'package:scr_wikrama/model_pembimbing.dart';
 import 'package:scr_wikrama/ps/dashboard_ps.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
@@ -23,8 +17,10 @@ class MyApp extends StatelessWidget {
       title: 'PPLG APP',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+
       ),
       home: const MyHomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -36,7 +32,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  static const List<String> _ruang = <String>["134", "203", "206", "207", "210", "322", "323"];
+  static const List<String> _ruang = <String>[
+    "134",
+    "203",
+    "206",
+    "207",
+    "210",
+    "322",
+    "323"
+  ];
   String _setRuang = "";
 
   TextEditingController _username = new TextEditingController();
@@ -45,37 +49,23 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _onLogin() async {
     // login
-    // var url = // server wikrama
-    //     Uri.http(
-    //         "10.20.30.100:812", "/scr_wikrama/lib_ps/login.php", {'q': '{http}'});
+    var url = // server wikrama
+        Uri.http("10.20.30.100:812", "/scr_wikrama/lib_ps/login.php",
+            {'q': '{http}'});
 
-    var url = // gunakakan IP komputer saat debug ke physical device
-        Uri.http(
-            "localhost", "/scr_wikrama/lib_ps/login.php", {'q': '{http}'});
-    
-    var response = await http.post(url,
-        body: {
-          "username": _username.text, 
-          "password": _password.text,
-          "ruang":_setRuang
-        },
-        headers: {"Access-Control-Allow-Methods": "POST, OPTIONS"});
+    // var url = // gunakakan IP komputer saat debug ke physical device
+    //     Uri.http(
+    //         "localhost", "/scr_wikrama/lib_ps/login.php", {'q': '{http}'});
+
+    var response = await http.post(url, body: {
+      "username": _username.text,
+      "password": _password.text,
+      "ruang": _setRuang
+    }, headers: {
+      "Access-Control-Allow-Methods": "POST, OPTIONS"
+    });
 
     if (response.statusCode == 200) {
-      
-      ScaffoldMessenger
-        .of(context)
-          .showSnackBar(SnackBar(
-            content: Text(
-              "Autentikasi berhasil!",
-              style: TextStyle(
-                color: Colors.cyan[700],
-              ),
-              ),
-            backgroundColor: Colors.amberAccent[100],
-            )
-          );
-      
       userLogin = jsonDecode(response.body);
       print(userLogin);
       Navigator.push(
@@ -93,13 +83,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    // _onLogin();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.amber[600],
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -109,10 +99,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   EdgeInsets.only(right: 15, top: 25, left: 15, bottom: 25),
               child: CircleAvatar(
                 maxRadius: 50,
-                backgroundColor: Colors.amber[600],
-                child: Icon(
-                  Icons.computer_sharp,
-                  size: 40,
+                backgroundColor: Colors.amber[50],
+                child: Image.asset(
+                  "assets/icons/icon_app.png",
+                  width: 200,
+                  height: 200,
                 ),
               ),
             ),
@@ -125,7 +116,8 @@ class _MyHomePageState extends State<MyHomePage> {
               child: TextFormField(
                 controller: _username,
                 decoration: InputDecoration(
-                    iconColor: Colors.amber[50],
+                    filled: true,
+                    fillColor: Colors.amber[50],
                     prefixIcon: Icon(Icons.email_rounded),
                     hintText: ("Email"),
                     border: OutlineInputBorder(
@@ -138,6 +130,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 controller: _password,
                 obscureText: true,
                 decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.amber[50],
                     prefixIcon: Icon(Icons.password_rounded),
                     hintText: ("Kata Sandi"),
                     border: OutlineInputBorder(
@@ -147,37 +141,39 @@ class _MyHomePageState extends State<MyHomePage> {
             Padding(
               padding: EdgeInsets.only(right: 100, bottom: 10, left: 100),
               child: DropdownButtonFormField(
-                          style: TextStyle(
-                          fontSize: 14
-                        ),
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5))),
-                                filled: true,
-                                hintText: 'Ruang'),
-                            items: _ruang
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (String? value) {
-                              setState(() {
-                                _setRuang = value!;
-                              });
-                            }),
+                  icon: Icon(Icons.meeting_room_rounded),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5))),
+                      filled: true,
+                      fillColor: Colors.amber[50],
+                      hintText: 'Ruang'),
+                  items: _ruang.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (String? value) {
+                    setState(() {
+                      _setRuang = value!;
+                    });
+                  }),
             ),
             Padding(
               padding: EdgeInsets.only(right: 15, left: 15, bottom: 10),
               child: ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.amber),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.black),
                 ),
                 onPressed: () {
                   print("\nDEBUG : \n");
-                  _onLogin();
+
+                  _validasi();
                 },
                 child: Padding(
                   padding: EdgeInsets.all(10),
@@ -188,13 +184,33 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => MainMenu()));
-        },
-        child: const Icon(Icons.logout_outlined),
-      ),
     );
+  }
+
+  _validasi() {
+    if (_username.text == "") {
+      print("Email tidak boleh kosong!");
+      
+      ScaffoldMessenger
+        .of(context)
+          .showSnackBar(SnackBar(
+            content: Text(
+              "Email tidak boleh kosong!",
+              style: TextStyle(
+                color: Colors.teal,
+              ),
+            ),
+            backgroundColor: Colors.amber[50],
+            
+            )
+          );
+
+    } else if (_password.text == "") {
+      print("Kata sandi tidak boleh kosong!");
+    } else if (_username.text =="" && _password.text == "") {
+      print("Nama pengguna dab kata sandi tidak boleh kosong!");
+    } else {
+      _onLogin();
+    }
   }
 }

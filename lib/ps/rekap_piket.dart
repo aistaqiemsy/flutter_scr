@@ -1,15 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
 import 'package:scr_wikrama/ps/detail_piket.dart';
-import 'package:scr_wikrama/ps/tambah_piket_harian.dart';
 import 'package:http/http.dart' as http;
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:scr_wikrama/ps/tambah_piket_harian.dart';
 
 class RekapPiket extends StatefulWidget {
   const RekapPiket(
@@ -47,13 +43,15 @@ class _RekapPiketState extends State<RekapPiket> {
     // var url = // server wikrama
     //     Uri.http(
     //         "10.20.30.100:812",
-    //         "/scr_wikrama/students/piket/tambah_piket_harian.php", {'q': '{http}'});
+    //         "/scr_wikrama/students/piket/tambah_piket_harian.php",
+    //         {'q': '{http}'});
 
     var url = // server lokal
         Uri.http(
             "localhost",
             "/scr_wikrama/students/piket/tambah_piket_harian.php",
             {'q': '{http}'});
+
     var response = await http.post(url, body: {
       "id_ruang": _idRuangController.text,
       "tgl": _tglController.toString(),
@@ -74,37 +72,38 @@ class _RekapPiketState extends State<RekapPiket> {
       var simpanSiswa = jsonDecode(response.body);
       print(simpanSiswa);
 
-      showDialog(
-          //tampilkan pesan tambah data lagi atau tidak
-          context: context,
-          builder: (BuildContext content) {
-            return Expanded(
-                child: AlertDialog(
-              content: ListTile(
-                leading: Icon(
-                  Icons.info,
-                  color: Colors.lightGreenAccent[600],
-                ),
-                title: Text(
-                  "Data berhasil disimpan!",
-                  style: TextStyle(color: Colors.brown[400]),
-                ),
-              ),
-              actions: [
-                ElevatedButton(
-                    child: Text(
-                      "OK",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      _refreshPiket(); // panggil fungsi refresh data
+      // showDialog(
+      //     //tampilkan pesan tambah data lagi atau tidak
+      //     context: context,
+      //     builder: (BuildContext content) {
+      //       return Expanded(
+      //           child: AlertDialog(
+      //         content: ListTile(
+      //           leading: Icon(
+      //             Icons.info,
+      //             color: Colors.lightGreenAccent[600],
+      //           ),
+      //           title: Text(
+      //             "Data berhasil disimpan!",
+      //             style: TextStyle(color: Colors.brown[400]),
+      //           ),
+      //         ),
+      //         actions: [
+      //           ElevatedButton(
+      //               child: Text(
+      //                 "OK",
+      //                 style: TextStyle(color: Colors.white),
+      //               ),
+      //               onPressed: () {
+      //                 _refreshPiket(); // panggil fungsi refresh data
 
-                      print("Tombol ['OK'] ditekan...");
-                      Navigator.pop(context);
-                    }),
-              ],
-            ));
-          });
+      //                 print("Tombol ['OK'] ditekan...");
+      //                 Navigator.pop(context);
+      //               }),
+      //         ],
+      //       ));
+      //     });
+
     } else {
       print("Koneksi gagal!");
     }
@@ -117,6 +116,12 @@ class _RekapPiketState extends State<RekapPiket> {
     //     Uri.http(
     //         "10.20.30.100:812",
     //         "/scr_wikrama/students/displayRekapPiketRayon.php", {'q': '{http}'});
+
+    // var url = // server wikrama
+    //     Uri.http(
+    //         "10.20.30.100:812",
+    //         "/scr_wikrama/students/displayRekapPiketRayon.php",
+    //         {'q': '{http}'});
 
     var url = // server lokal
         Uri.http(
@@ -204,6 +209,32 @@ class _RekapPiketState extends State<RekapPiket> {
       appBar: AppBar(
         backgroundColor: Colors.amber[600],
         title: Text("Rekap Piket Rayon"),
+        // actions: [
+        //   Card(
+        //       elevation: 20,
+        //       shape: RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.circular(150),
+        //       ),
+        //       child: Container(
+        //           width: 50,
+        //           height: 50,
+        //           child: InkWell(
+        //             onTap: () {
+        //               print("DEBUG!");
+        //               Navigator.push(
+        //                   context,
+        //                   MaterialPageRoute(
+        //                       builder: (context) => TambahPiketHarian(
+        //                           getRuang: rekap, 
+        //                           idRuang: id_ruang)));
+        //             },
+        //             child: Icon(Icons.post_add_rounded),
+        //           ),
+        //           decoration: BoxDecoration(
+        //               // The child of a round Card should be in round shape if it has a background color
+        //               shape: BoxShape.circle,
+        //               color: Colors.amber[800]))),
+        // ],
       ),
       body: ListView.builder(
         itemCount: rekap.length,
@@ -241,289 +272,290 @@ class _RekapPiketState extends State<RekapPiket> {
         backgroundColor: Colors.amber[900],
         child: Icon(Icons.post_add_outlined),
         onPressed: () {
-          _tambahPiketHarian();
+          // _tambahPiketHarian();
 
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //       builder: (context) => TambahPiketHarian(
-          //             getRuang: rekap,
-          //             idRuang: id_ruang,
-          //           )),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => TambahPiketHarian(
+                      getRuang: rekap,
+                      idRuang: id_ruang,
+                    )),
+          );
         },
       ),
     );
   }
 
-  _tambahPiketHarian() {
-    showDialog(
-        context: context,
-        builder: (BuildContext content) {
-          return ListView.builder(
-            itemCount: 1,
-            itemBuilder: (content, index) {
-              return Expanded(
-                  child: AlertDialog(
-                title: Text("Tambah Data"),
-                content: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 5),
-                      child: TextFormField(
-                        style: TextStyle(fontSize: 14),
-                        controller: _idRuangController,
-                        enabled: false,
-                        decoration: InputDecoration(
-                            suffixIcon: InkWell(
-                              child: Icon(Icons.info),
-                              onTap: () {
-                                print("Informasi tentang otomatis room");
-                              },
-                            ),
-                            hintText: ("Ruang"),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.amber))),
-                      ),
-                    ),
-                    Padding(
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: DateTimeField(
-                          style: TextStyle(fontSize: 14),
-                          decoration: InputDecoration(
-                            suffixIcon: Icon(Icons.date_range),
-                          ),
-                          initialValue: DateTime.now(),
-                          format: DateFormat("yyyy-MM-dd"),
-                          onShowPicker: (context, currentValue) async {
-                            final date = await showDatePicker(
-                              context: context,
-                              initialDate: currentValue ?? DateTime.now(),
-                              firstDate: DateTime(1998),
-                              lastDate: DateTime(2025),
-                            );
-                            if (date != null) {
-                              return _tglController = DateTime.now();
-                            }
-                            return currentValue;
-                          },
-                        )),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 5),
-                      child: TextFormField(
-                        style: TextStyle(fontSize: 14),
-                        controller: _checkerController,
-                        decoration: InputDecoration(
-                          hintText: ("Saksi ( Nama PS / PJ )"),
-                          suffixIcon: Icon(Icons.person_pin),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: DropdownButtonFormField(
-                            style: TextStyle(fontSize: 14),
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5))),
-                                filled: true,
-                                hintText: 'Sapu Lantai'),
-                            items: list
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (String? value) {
-                              setState(() {
-                                _valueSapuLantai = value!;
-                              });
-                            })),
-                    Padding(
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: DropdownButtonFormField(
-                            style: TextStyle(fontSize: 14),
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5))),
-                                filled: true,
-                                hintText: 'Lap Kaca'),
-                            items: list
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (String? value) {
-                              setState(() {
-                                _valueLapKaca = value!;
-                              });
-                            })),
-                    Padding(
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: DropdownButtonFormField(
-                            style: TextStyle(fontSize: 14),
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5))),
-                                filled: true,
-                                hintText: 'Pel Lantai'),
-                            items: list
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (String? value) {
-                              setState(() {
-                                _valuepelLantai = value!;
-                              });
-                            })),
-                    Padding(
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: DropdownButtonFormField(
-                            style: TextStyle(fontSize: 14),
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5))),
-                                filled: true,
-                                hintText: 'Merapikan Meja dan Kursi'),
-                            items: list
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (String? value) {
-                              setState(() {
-                                _valueMejaKursi = value!;
-                              });
-                            })),
-                    Padding(
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: DropdownButtonFormField(
-                            style: TextStyle(fontSize: 14),
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5))),
-                                filled: true,
-                                hintText: 'Membersihkan Sampah'),
-                            items: list
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (String? value) {
-                              setState(() {
-                                _valueCleanSampah = value!;
-                              });
-                            })),
-                    Padding(
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: DropdownButtonFormField(
-                            style: TextStyle(fontSize: 14),
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5))),
-                                filled: true,
-                                hintText: 'Lap Komputer'),
-                            items: list
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (String? value) {
-                              setState(() {
-                                _valueLapKomputer = value!;
-                              });
-                            })),
-                    Padding(
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: DropdownButtonFormField(
-                            style: TextStyle(fontSize: 14),
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5))),
-                                filled: true,
-                                hintText: 'Lampu, Saklar dan Komputer Mati'),
-                            items: list
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (String? value) {
-                              setState(() {
-                                _valueSaklar = value!;
-                              });
-                            })),
-                    Padding(
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: TextField(
-                          controller: _ketController,
-                          maxLines: 6,
-                          minLines: 1,
-                          expands: false,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              filled: true,
-                              hintText: 'Keterangan piket hari ini'),
-                        )),
-                  ],
-                ),
-                actions: [
-                  ElevatedButton(
-                      child: Text(
-                        "Simpan",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        print("Menyimpan data...");
-                        _simpanPiket();
+  // _tambahPiketHarian() {
+  //   showDialog(
+  //       context: context,
+  //       builder: (BuildContext content) {
+  //         return ListView.builder(
+  //           itemCount: 1,
+  //           itemBuilder: (content, index) {
+  //             return Expanded(
+  //                 child: AlertDialog(
+  //               title: Text("Tambah Data"),
+  //               content: Column(
+  //                 children: [
+  //                   Padding(
+  //                     padding: EdgeInsets.only(bottom: 5),
+  //                     child: TextFormField(
+  //                       style: TextStyle(fontSize: 14),
+  //                       controller: _idRuangController,
+  //                       enabled: false,
+  //                       decoration: InputDecoration(
+  //                           suffixIcon: InkWell(
+  //                             child: Icon(Icons.info),
+  //                             onTap: () {
+  //                               print("Informasi tentang otomatis room");
+  //                             },
+  //                           ),
+  //                           hintText: ("Ruang"),
+  //                           border: OutlineInputBorder(
+  //                             borderRadius: BorderRadius.circular(10),
+  //                           ),
+  //                           enabledBorder: OutlineInputBorder(
+  //                               borderSide: BorderSide(color: Colors.amber))),
+  //                     ),
+  //                   ),
+  //                   Padding(
+  //                       padding: EdgeInsets.only(bottom: 5),
+  //                       child: DateTimeField(
+  //                         style: TextStyle(fontSize: 14),
+  //                         decoration: InputDecoration(
+  //                           suffixIcon: Icon(Icons.date_range),
+  //                         ),
+  //                         initialValue: DateTime.now(),
+  //                         format: DateFormat("yyyy-MM-dd"),
+  //                         onShowPicker: (context, currentValue) async {
+  //                           final date = await showDatePicker(
+  //                             context: context,
+  //                             initialDate: currentValue ?? DateTime.now(),
+  //                             firstDate: DateTime(1998),
+  //                             lastDate: DateTime(2025),
+  //                           );
+  //                           if (date != null) {
+  //                             return _tglController = DateTime.now();
+  //                           }
+  //                           return currentValue;
+  //                         },
+  //                       ),
+  //                     ),
+  //                   Padding(
+  //                     padding: EdgeInsets.only(bottom: 5),
+  //                     child: TextFormField(
+  //                       style: TextStyle(fontSize: 14),
+  //                       controller: _checkerController,
+  //                       decoration: InputDecoration(
+  //                         hintText: ("Saksi ( Nama PS / PJ )"),
+  //                         suffixIcon: Icon(Icons.person_pin),
+  //                         border: OutlineInputBorder(
+  //                           borderRadius: BorderRadius.circular(10),
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   Padding(
+  //                       padding: EdgeInsets.only(bottom: 5),
+  //                       child: DropdownButtonFormField(
+  //                           style: TextStyle(fontSize: 14),
+  //                           decoration: InputDecoration(
+  //                               border: OutlineInputBorder(
+  //                                   borderRadius:
+  //                                       BorderRadius.all(Radius.circular(5))),
+  //                               filled: true,
+  //                               hintText: 'Sapu Lantai'),
+  //                           items: list
+  //                               .map<DropdownMenuItem<String>>((String value) {
+  //                             return DropdownMenuItem<String>(
+  //                               value: value,
+  //                               child: Text(value),
+  //                             );
+  //                           }).toList(),
+  //                           onChanged: (String? value) {
+  //                             setState(() {
+  //                               _valueSapuLantai = value!;
+  //                             });
+  //                           })),
+  //                   Padding(
+  //                       padding: EdgeInsets.only(bottom: 5),
+  //                       child: DropdownButtonFormField(
+  //                           style: TextStyle(fontSize: 14),
+  //                           decoration: InputDecoration(
+  //                               border: OutlineInputBorder(
+  //                                   borderRadius:
+  //                                       BorderRadius.all(Radius.circular(5))),
+  //                               filled: true,
+  //                               hintText: 'Lap Kaca'),
+  //                           items: list
+  //                               .map<DropdownMenuItem<String>>((String value) {
+  //                             return DropdownMenuItem<String>(
+  //                               value: value,
+  //                               child: Text(value),
+  //                             );
+  //                           }).toList(),
+  //                           onChanged: (String? value) {
+  //                             setState(() {
+  //                               _valueLapKaca = value!;
+  //                             });
+  //                           })),
+  //                   Padding(
+  //                       padding: EdgeInsets.only(bottom: 5),
+  //                       child: DropdownButtonFormField(
+  //                           style: TextStyle(fontSize: 14),
+  //                           decoration: InputDecoration(
+  //                               border: OutlineInputBorder(
+  //                                   borderRadius:
+  //                                       BorderRadius.all(Radius.circular(5))),
+  //                               filled: true,
+  //                               hintText: 'Pel Lantai'),
+  //                           items: list
+  //                               .map<DropdownMenuItem<String>>((String value) {
+  //                             return DropdownMenuItem<String>(
+  //                               value: value,
+  //                               child: Text(value),
+  //                             );
+  //                           }).toList(),
+  //                           onChanged: (String? value) {
+  //                             setState(() {
+  //                               _valuepelLantai = value!;
+  //                             });
+  //                           })),
+  //                   Padding(
+  //                       padding: EdgeInsets.only(bottom: 5),
+  //                       child: DropdownButtonFormField(
+  //                           style: TextStyle(fontSize: 14),
+  //                           decoration: InputDecoration(
+  //                               border: OutlineInputBorder(
+  //                                   borderRadius:
+  //                                       BorderRadius.all(Radius.circular(5))),
+  //                               filled: true,
+  //                               hintText: 'Merapikan Meja dan Kursi'),
+  //                           items: list
+  //                               .map<DropdownMenuItem<String>>((String value) {
+  //                             return DropdownMenuItem<String>(
+  //                               value: value,
+  //                               child: Text(value),
+  //                             );
+  //                           }).toList(),
+  //                           onChanged: (String? value) {
+  //                             setState(() {
+  //                               _valueMejaKursi = value!;
+  //                             });
+  //                           })),
+  //                   Padding(
+  //                       padding: EdgeInsets.only(bottom: 5),
+  //                       child: DropdownButtonFormField(
+  //                           style: TextStyle(fontSize: 14),
+  //                           decoration: InputDecoration(
+  //                               border: OutlineInputBorder(
+  //                                   borderRadius:
+  //                                       BorderRadius.all(Radius.circular(5))),
+  //                               filled: true,
+  //                               hintText: 'Membersihkan Sampah'),
+  //                           items: list
+  //                               .map<DropdownMenuItem<String>>((String value) {
+  //                             return DropdownMenuItem<String>(
+  //                               value: value,
+  //                               child: Text(value),
+  //                             );
+  //                           }).toList(),
+  //                           onChanged: (String? value) {
+  //                             setState(() {
+  //                               _valueCleanSampah = value!;
+  //                             });
+  //                           })),
+  //                   Padding(
+  //                       padding: EdgeInsets.only(bottom: 5),
+  //                       child: DropdownButtonFormField(
+  //                           style: TextStyle(fontSize: 14),
+  //                           decoration: InputDecoration(
+  //                               border: OutlineInputBorder(
+  //                                   borderRadius:
+  //                                       BorderRadius.all(Radius.circular(5))),
+  //                               filled: true,
+  //                               hintText: 'Lap Komputer'),
+  //                           items: list
+  //                               .map<DropdownMenuItem<String>>((String value) {
+  //                             return DropdownMenuItem<String>(
+  //                               value: value,
+  //                               child: Text(value),
+  //                             );
+  //                           }).toList(),
+  //                           onChanged: (String? value) {
+  //                             setState(() {
+  //                               _valueLapKomputer = value!;
+  //                             });
+  //                           })),
+  //                   Padding(
+  //                       padding: EdgeInsets.only(bottom: 5),
+  //                       child: DropdownButtonFormField(
+  //                           style: TextStyle(fontSize: 14),
+  //                           decoration: InputDecoration(
+  //                               border: OutlineInputBorder(
+  //                                   borderRadius:
+  //                                       BorderRadius.all(Radius.circular(5))),
+  //                               filled: true,
+  //                               hintText: 'Lampu, Saklar dan Komputer Mati'),
+  //                           items: list
+  //                               .map<DropdownMenuItem<String>>((String value) {
+  //                             return DropdownMenuItem<String>(
+  //                               value: value,
+  //                               child: Text(value),
+  //                             );
+  //                           }).toList(),
+  //                           onChanged: (String? value) {
+  //                             setState(() {
+  //                               _valueSaklar = value!;
+  //                             });
+  //                           })),
+  //                   Padding(
+  //                       padding: EdgeInsets.only(bottom: 5),
+  //                       child: TextField(
+  //                         controller: _ketController,
+  //                         maxLines: 6,
+  //                         minLines: 1,
+  //                         expands: false,
+  //                         decoration: InputDecoration(
+  //                             border: OutlineInputBorder(
+  //                                 borderRadius:
+  //                                     BorderRadius.all(Radius.circular(5))),
+  //                             filled: true,
+  //                             hintText: 'Keterangan piket hari ini'),
+  //                       )),
+  //                 ],
+  //               ),
+  //               actions: [
+  //                 ElevatedButton(
+  //                     child: Text(
+  //                       "Simpan",
+  //                       style: TextStyle(color: Colors.white),
+  //                     ),
+  //                     onPressed: () {
+  //                       print("Menyimpan data...");
+  //                       _simpanPiket();
 
-                        print(_tglController);
+  //                       print(_tglController);
 
-                        // _getData(); // untuk mereload data
+  //                       // _getData(); // untuk mereload data
 
-                        Navigator.pop(context);
-                      }),
-                  ElevatedButton(
-                      child: Text(
-                        "Kembali",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        print("Tombol kembali ditekan...");
-                        Navigator.pop(context);
-                      })
-                ],
-              ));
-            },
-          );
-        });
-  }
+  //                       Navigator.pop(context);
+  //                     }),
+  //                 ElevatedButton(
+  //                     child: Text(
+  //                       "Kembali",
+  //                       style: TextStyle(color: Colors.white),
+  //                     ),
+  //                     onPressed: () {
+  //                       print("Tombol kembali ditekan...");
+  //                       Navigator.pop(context);
+  //                     })
+  //               ],
+  //             ));
+  //           },
+  //         );
+  //       });
+  // }
 }

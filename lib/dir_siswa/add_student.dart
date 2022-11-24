@@ -23,9 +23,17 @@ class _AddStudentState extends State<AddStudent> {
   TextEditingController _hari = new TextEditingController();
 
   Future<void> _simpanSiswa() async {
-    // login
-    var url = Uri.http(
-        "127.0.0.1", "/scr_wikrama/students/addStudent.php", {'q': '{http}'});
+    var url = // server wikrama
+        Uri.http(
+            "10.20.30.100:812",
+            "/scr_wikrama/students/addStudent.php", 
+            {'q': '{http}'}
+          );
+
+    // var url = Uri.http(
+    //     "127.0.0.1", 
+    //     "/scr_wikrama/students/addStudent.php", {'q': '{http}'});
+
     var response = await http.post(url, body: {
       "id_pesdik": _idPesdik.text,
       "nisn": _nisn.text,
