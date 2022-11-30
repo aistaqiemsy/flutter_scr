@@ -133,13 +133,13 @@ class _DetailPSState extends State<DetailPS> {
     // fungsi panggil rekap piket per rayon
     print("\n\n Mengambil data...");
 
-    var url = // server wikrama
-        Uri.http(
-            "10.20.30.100:812", 
-            "/scr_wikrama/students/displayRekapPiketRayon.php", {'q': '{http}'});
+    // var url = // server wikrama
+    //     Uri.http(
+    //         "10.20.30.100:812", 
+    //         "/scr_wikrama/students/displayRekapPiketRayon.php", {'q': '{http}'});
 
-    // var url = Uri.http("localhost",
-    //     "/scr_wikrama/students/displayRekapPiketRayon.php", {'q': '{http}'});
+    var url = Uri.http("localhost",
+        "/scr_wikrama/students/displayRekapPiketRayon.php", {'q': '{http}'});
     var response = await http.post(url, body: {"id_ruang": id_ruang});
 
     _rekapPiketRayon = jsonDecode(response.body);

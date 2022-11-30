@@ -48,14 +48,14 @@ class _MyHomePageState extends State<MyHomePage> {
   List userLogin = [];
 
   Future<void> _onLogin() async {
-    // login
-    var url = // server wikrama
-        Uri.http("10.20.30.100:812", "/scr_wikrama/lib_ps/login.php",
-            {'q': '{http}'});
+    // // login
+    // var url = // server wikrama
+    //     Uri.http("10.20.30.100:812", "/scr_wikrama/lib_ps/login.php",
+    //         {'q': '{http}'});
 
-    // var url = // gunakakan IP komputer saat debug ke physical device
-    //     Uri.http(
-    //         "localhost", "/scr_wikrama/lib_ps/login.php", {'q': '{http}'});
+    var url = // gunakakan IP komputer saat debug ke physical device
+        Uri.http(
+            "localhost", "/scr_wikrama/lib_ps/login.php", {'q': '{http}'});
 
     var response = await http.post(url, body: {
       "username": _username.text,
