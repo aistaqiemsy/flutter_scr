@@ -37,13 +37,13 @@ class _PiketRayonState extends State<PiketRayon> {
     late List displaySiswa;
 
    Future<void> _displaySiswa() async { // tampilkan data siswa per rayon
-   var url = // server wikrama
-        Uri.http(
-            "10.20.30.100:812", 
-            "/scr_wikrama/students/displayStudents.php", {'q': '{http}'});
+  //  var url = // server wikrama
+  //       Uri.http(
+  //           "10.20.30.100:812", 
+  //           "/scr_wikrama/students/displayStudents.php", {'q': '{http}'});
 
-    //  var url = // server lokal
-    //  Uri.http("127.0.0.1", "/scr_wikrama/students/displayStudents.php", {'q': '{http}'});
+     var url = // server lokal
+     Uri.http("127.0.0.1", "/scr_wikrama/students/displayStudents.php", {'q': '{http}'});
     
      var response = await http.post(
          url,

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:scr_wikrama/ps/piket_rayon.dart';
+import 'package:scr_wikrama/widgets/exitPopup.dart';
 
 class DashboardPs extends StatelessWidget {
   const DashboardPs({super.key, required this.userLogin});
@@ -10,8 +11,9 @@ class DashboardPs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // late String _pembimbing;
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () => showExitPopup(context),
+      child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.amber[600],
           leading: Image.asset(
@@ -106,7 +108,7 @@ class DashboardPs extends StatelessWidget {
             },
           ),
         )
-
+    ),
     );
   }
   }

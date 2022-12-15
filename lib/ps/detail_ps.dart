@@ -22,14 +22,14 @@ class _DetailPSState extends State<DetailPS> {
   late List _senin, _selasa, _rabu, _kamis, _jumat;
 
   Future<void> _getPiket() async {
-    var urlSenin = // server wikrama
-        Uri.http(
-            "10.20.30.100:812", 
-            "/scr_wikrama/students/display_piketSenin.php", {'q': '{http}'});
+    // var urlSenin = // server wikrama
+    //     Uri.http(
+    //         "10.20.30.100:812", 
+    //         "/scr_wikrama/students/display_piketSenin.php", {'q': '{http}'});
 
     // ambit data piket senin
-    // var urlSenin = Uri.http("127.0.0.1",
-    //     "/scr_wikrama/students/display_piketSenin.php", {'q': '{http}'});
+    var urlSenin = Uri.http("127.0.0.1",
+        "/scr_wikrama/students/display_piketSenin.php", {'q': '{http}'});
 
     var responseSenin = await http.post(urlSenin, body: {
       "id_ruang": id_ruang,
@@ -37,13 +37,13 @@ class _DetailPSState extends State<DetailPS> {
       "Access-Control-Allow-Methods": "POST, OPTIONS"
     });
 
-    var urlSelasa = // server wikrama
-        Uri.http(
-            "10.20.30.100:812", 
-            "/scr_wikrama/students/display_piketSelasa.php", {'q': '{http}'});
+    // var urlSelasa = // server wikrama
+    //     Uri.http(
+    //         "10.20.30.100:812", 
+    //         "/scr_wikrama/students/display_piketSelasa.php", {'q': '{http}'});
 
-    // var urlSelasa = Uri.http("127.0.0.1",
-    //     "/scr_wikrama/students/display_piketSelasa.php", {'q': '{http}'});
+    var urlSelasa = Uri.http("127.0.0.1",
+        "/scr_wikrama/students/display_piketSelasa.php", {'q': '{http}'});
     
     var responseSelasa = await http.post(urlSelasa, body: {
       "id_ruang": id_ruang,
@@ -52,13 +52,13 @@ class _DetailPSState extends State<DetailPS> {
     });
 
     
-    var urlRabu = // server wikrama
-        Uri.http(
-            "10.20.30.100:812", 
-            "/scr_wikrama/students/display_piketRabu.php", {'q': '{http}'});
+    // var urlRabu = // server wikrama
+    //     Uri.http(
+    //         "10.20.30.100:812", 
+    //         "/scr_wikrama/students/display_piketRabu.php", {'q': '{http}'});
 
-    // var urlRabu = Uri.http("127.0.0.1",
-    //     "/scr_wikrama/students/display_piketRabu.php", {'q': '{http}'});
+    var urlRabu = Uri.http("127.0.0.1",
+        "/scr_wikrama/students/display_piketRabu.php", {'q': '{http}'});
     
     var responseRabu = await http.post(urlRabu, body: {
       "id_ruang": id_ruang,
@@ -66,13 +66,13 @@ class _DetailPSState extends State<DetailPS> {
       "Access-Control-Allow-Methods": "POST, OPTIONS"
     });
 
-    var urlKamis = // server wikrama
-        Uri.http(
-            "10.20.30.100:812", 
-            "/scr_wikrama/students/display_piketKamis.php", {'q': '{http}'});
+    // var urlKamis = // server wikrama
+    //     Uri.http(
+    //         "10.20.30.100:812", 
+    //         "/scr_wikrama/students/display_piketKamis.php", {'q': '{http}'});
 
-    // var urlKamis = Uri.http("127.0.0.1",
-    //     "/scr_wikrama/students/display_piketKamis.php", {'q': '{http}'});
+    var urlKamis = Uri.http("127.0.0.1",
+        "/scr_wikrama/students/display_piketKamis.php", {'q': '{http}'});
 
     var responseKamis = await http.post(urlKamis, body: {
       "id_ruang": id_ruang,
@@ -80,13 +80,13 @@ class _DetailPSState extends State<DetailPS> {
       "Access-Control-Allow-Methods": "POST, OPTIONS"
     });
 
-    var urlJumat = // server wikrama
-        Uri.http(
-            "10.20.30.100:812", 
-            "/scr_wikrama/students/display_piketJumat.php", {'q': '{http}'});
+    // var urlJumat = // server wikrama
+    //     Uri.http(
+    //         "10.20.30.100:812", 
+    //         "/scr_wikrama/students/display_piketJumat.php", {'q': '{http}'});
 
-    // var urlJumat = Uri.http("127.0.0.1",
-    //     "/scr_wikrama/students/display_piketJumat.php", {'q': '{http}'});
+    var urlJumat = Uri.http("127.0.0.1",
+        "/scr_wikrama/students/display_piketJumat.php", {'q': '{http}'});
     
     var responseJumat = await http.post(urlJumat, body: {
       "id_ruang": id_ruang,
@@ -140,6 +140,7 @@ class _DetailPSState extends State<DetailPS> {
 
     var url = Uri.http("localhost",
         "/scr_wikrama/students/displayRekapPiketRayon.php", {'q': '{http}'});
+
     var response = await http.post(url, body: {"id_ruang": id_ruang});
 
     _rekapPiketRayon = jsonDecode(response.body);

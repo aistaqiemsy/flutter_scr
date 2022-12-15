@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:scr_wikrama/ps/dashboard_ps.dart';
 import 'package:http/http.dart' as http;
+import 'package:scr_wikrama/widgets/exitPopup.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +18,6 @@ class MyApp extends StatelessWidget {
       title: 'PPLG APP',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-
       ),
       home: const MyHomePage(),
       debugShowCheckedModeBanner: false,
@@ -32,6 +32,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool valueCheckbox = false;
   static const List<String> _ruang = <String>[
     "134",
     "203",
@@ -48,14 +49,13 @@ class _MyHomePageState extends State<MyHomePage> {
   List userLogin = [];
 
   Future<void> _onLogin() async {
-    // // login
+    // login
     // var url = // server wikrama
     //     Uri.http("10.20.30.100:812", "/scr_wikrama/lib_ps/login.php",
     //         {'q': '{http}'});
 
     var url = // gunakakan IP komputer saat debug ke physical device
-        Uri.http(
-            "localhost", "/scr_wikrama/lib_ps/login.php", {'q': '{http}'});
+        Uri.http("127.0.0.1", "/scr_wikrama/lib_ps/login.php", {'q': '{http}'});
 
     var response = await http.post(url, body: {
       "username": _username.text,
@@ -68,6 +68,12 @@ class _MyHomePageState extends State<MyHomePage> {
     if (response.statusCode == 200) {
       userLogin = jsonDecode(response.body);
       print(userLogin);
+
+      const snackBar = SnackBar(
+        content: Text('Autentikasi berhasil!'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -164,6 +170,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   }),
             ),
             Padding(
+            padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+            child: Checkbox(
+                value: this.valueCheckbox,
+                onChanged: (value) {
+                  setState(() {
+                    this.valueCheckbox = value!;
+                  });
+                }),
+          ),
+            Padding(
               padding: EdgeInsets.only(right: 15, left: 15, bottom: 10),
               child: ElevatedButton(
                 style: ButtonStyle(
@@ -174,6 +190,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   print("\nDEBUG : \n");
 
                   _validasi();
+
+                  // print(valueCheckbox);
                 },
                 child: Padding(
                   padding: EdgeInsets.all(10),
@@ -190,24 +208,19 @@ class _MyHomePageState extends State<MyHomePage> {
   _validasi() {
     if (_username.text == "") {
       print("Email tidak boleh kosong!");
-      
-      ScaffoldMessenger
-        .of(context)
-          .showSnackBar(SnackBar(
-            content: Text(
-              "Email tidak boleh kosong!",
-              style: TextStyle(
-                color: Colors.teal,
-              ),
-            ),
-            backgroundColor: Colors.amber[50],
-            
-            )
-          );
 
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          "Email tidak boleh kosong!",
+          style: TextStyle(
+            color: Colors.teal,
+          ),
+        ),
+        backgroundColor: Colors.amber[50],
+      ));
     } else if (_password.text == "") {
       print("Kata sandi tidak boleh kosong!");
-    } else if (_username.text =="" && _password.text == "") {
+    } else if (_username.text == "" && _password.text == "") {
       print("Nama pengguna dab kata sandi tidak boleh kosong!");
     } else {
       _onLogin();

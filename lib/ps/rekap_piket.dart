@@ -128,12 +128,6 @@ class _RekapPiketState extends State<RekapPiket> {
     //         "10.20.30.100:812",
     //         "/scr_wikrama/students/displayRekapPiketRayon.php", {'q': '{http}'});
 
-    // var url = // server wikrama
-    //     Uri.http(
-    //         "10.20.30.100:812",
-    //         "/scr_wikrama/students/displayRekapPiketRayon.php",
-    //         {'q': '{http}'});
-
     var url = // server lokal
         Uri.http(
             "localhost",
@@ -248,6 +242,17 @@ class _RekapPiketState extends State<RekapPiket> {
                     Text(rekap[index]["checker"])
                   ],
                 ),
+                // trailing: InkWell(
+                //   child: CircleAvatar(
+                //     backgroundColor: Colors.amber[50],
+                //     child: Icon(
+                //       Icons.edit
+                //     ),
+                //   ),
+                //   onTap: () {
+
+                //   },
+                // ),
               ),
             ),
           );

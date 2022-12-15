@@ -20,6 +20,15 @@ class TambahPiketHarian extends StatefulWidget {
 }
 
 class _TambahPiketHarianState extends State<TambahPiketHarian> {
+ bool bSapuLantai = false,
+      bLapKaca = false,
+      bPelLantai = false,
+      bMejaKursi = false,
+      bCleanSampah = false,
+      bLapKomputer = false,
+      bDeviceOff = false,
+      bInfoLain = false;
+
   _TambahPiketHarianState({required this.getRuang, required this.idRuang});
   late DateTime _tglController;
   late List getRuang;
@@ -33,34 +42,34 @@ class _TambahPiketHarianState extends State<TambahPiketHarian> {
   String _valueCleanSampah = list.first;
   String _valueLapKomputer = list.first;
   String _valueSaklar = list.first;
-  String _valueKetLain = list.first;
+  // String _valueKetLain = list.first;
 
   TextEditingController _idRuang = new TextEditingController();
   TextEditingController _checker = new TextEditingController();
+  TextEditingController _valueKetLain = new TextEditingController();
 
   Future<void> _simpanPiket() async {
     // var url = // server wikrama
     //     Uri.http(
     //         "10.20.30.100:812",
-    //         "/scr_wikrama/students/piket/tambah_piket_harian.php", 
-    //         {'q': '{http}'}
-    //       );
+    //         "/scr_wikrama/students/piket/tambah_piket_harian.php",
+    //         {'q': '{http}'});
 
     var url = Uri.http("localhost",
         "/scr_wikrama/students/piket/tambah_piket_harian.php", {'q': '{http}'});
-    
+
     var response = await http.post(url, body: {
-      "id_ruang"  : _idRuang.text,
-      "tgl"       : _tglController.toString(),
-      "checker"   : _checker.text,
-      "sapu"      : _valueSapuLantai,
-      "lap"       : _valueLapKaca,
-      "pel"       : _valuepelLantai,
-      "meja"      : _valueMejaKursi,
-      "clean"     : _valueCleanSampah,
-      "lap_pc"    : _valueLapKaca,
-      "lampu"     : _valueSaklar,
-      "ket_lain"  : _valueKetLain
+      "id_ruang": _idRuang.text,
+      "tgl": _tglController.toString(),
+      "checker": _checker.text,
+      "sapu": _valueSapuLantai,
+      "lap": _valueLapKaca,
+      "pel": _valuepelLantai,
+      "meja": _valueMejaKursi,
+      "clean": _valueCleanSampah,
+      "lap_pc": _valueLapKaca,
+      "lampu": _valueSaklar,
+      "ket_lain": _valueKetLain
     }, headers: {
       "Access-Control-Allow-Methods": "POST, OPTIONS"
     });
@@ -69,37 +78,11 @@ class _TambahPiketHarianState extends State<TambahPiketHarian> {
       var simpanSiswa = jsonDecode(response.body);
       print(simpanSiswa);
 
-      showDialog(
-          //tampilkan pesan tambah data lagi atau tidak
-          context: context,
-          builder: (BuildContext content) {
-            return Expanded(
-                child: AlertDialog(
-              content: ListTile(
-                leading: Icon(
-                  Icons.info,
-                  color: Colors.lightGreenAccent[600],
-                ),
-                title: Text(
-                  "Data berhasil disimpan!",
-                  style: TextStyle(color: Colors.brown[400]),
-                ),
-              ),
-              actions: [
-                ElevatedButton(
-                    child: Text(
-                      "OK",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      print("Tombol OK ditekan...");
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                    }),
-              ],
-            ));
-          });
-
+      const snackBar = SnackBar(
+        content: Text('Data piket berhasil disimpan!'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      Navigator.pop(context);
     } else {
       print("Koneksi gagal!");
     }
@@ -133,40 +116,29 @@ class _TambahPiketHarianState extends State<TambahPiketHarian> {
                       borderRadius: BorderRadius.circular(10))),
             ),
           ),
-          // Padding(
-          //   padding: EdgeInsets.only(left: 20, right: 20, top: 10),
-          //   child: TextFormField(
-          //     controller: _tgl,
-          //     decoration: InputDecoration(
-          //         hintText: ("Tanggal Piket"),
-          //         icon: Icon(Icons.account_circle_sharp),
-          //         border: OutlineInputBorder(
-          //             borderRadius: BorderRadius.circular(10))),
-          //   ),
-          // ),
           Padding(
-                        padding: EdgeInsets.only(left: 60, right: 20, bottom: 5),
-                        child: DateTimeField(
-                          style: TextStyle(fontSize: 14),
-                          decoration: InputDecoration(
-                            suffixIcon: Icon(Icons.date_range),
-                          ),
-                          initialValue: DateTime.now(),
-                          format: DateFormat("yyyy-MM-dd"),
-                          onShowPicker: (context, currentValue) async {
-                            final date = await showDatePicker(
-                              context: context,
-                              initialDate: currentValue ?? DateTime.now(),
-                              firstDate: DateTime(1998),
-                              lastDate: DateTime(2025),
-                            );
-                            if (date != null) {
-                              return _tglController = DateTime.now();
-                            }
-                            return currentValue;
-                          },
-                        ),
-                      ),
+            padding: EdgeInsets.only(left: 60, right: 20, bottom: 5),
+            child: DateTimeField(
+              style: TextStyle(fontSize: 14),
+              decoration: InputDecoration(
+                suffixIcon: Icon(Icons.date_range),
+              ),
+              initialValue: DateTime.now(),
+              format: DateFormat("yyyy-MM-dd"),
+              onShowPicker: (context, currentValue) async {
+                final date = await showDatePicker(
+                  context: context,
+                  initialDate: currentValue ?? DateTime.now(),
+                  firstDate: DateTime(1998),
+                  lastDate: DateTime(2025),
+                );
+                if (date != null) {
+                  return _tglController = DateTime.now();
+                }
+                return currentValue;
+              },
+            ),
+          ),
           Padding(
             padding: EdgeInsets.only(left: 20, right: 20, top: 10),
             child: TextFormField(
@@ -179,24 +151,33 @@ class _TambahPiketHarianState extends State<TambahPiketHarian> {
             ),
           ),
           Padding(
-              padding: EdgeInsets.only(left: 60, right: 20, top: 10),
-              child: DropdownButtonFormField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      filled: true,
-                      hintText: 'Sapu Lantai'),
-                  items: list.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (String? value) {
-                    setState(() {
-                      _valueSapuLantai = value!;
-                    });
-                  })),
+              padding: EdgeInsets.only(top: 10),
+              child: Checkbox(
+                value: this.bSapuLantai,
+                onChanged: (value) {
+                  setState(() {
+                    this.bSapuLantai = value!;
+                  });
+                },
+              )
+              // DropdownButtonFormField(
+              //     decoration: InputDecoration(
+              //         border: OutlineInputBorder(
+              //             borderRadius: BorderRadius.all(Radius.circular(5))),
+              //         filled: true,
+              //         hintText: 'Sapu Lantai'),
+              //     items: list.map<DropdownMenuItem<String>>((String value) {
+              //       return DropdownMenuItem<String>(
+              //         value: value,
+              //         child: Text(value),
+              //       );
+              //     }).toList(),
+              //     onChanged: (String? value) {
+              //       setState(() {
+              //         _valueSapuLantai = value!;
+              //       });
+              //     }),
+              ),
           Padding(
               padding: EdgeInsets.only(left: 60, right: 20, top: 10),
               child: DropdownButtonFormField(
@@ -311,25 +292,20 @@ class _TambahPiketHarianState extends State<TambahPiketHarian> {
                       _valueSaklar = value!;
                     });
                   })),
-                  Padding(
+          Padding(
               padding: EdgeInsets.only(left: 60, right: 20, top: 10),
-              child: DropdownButtonFormField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      filled: true,
-                      hintText: 'Keterangan Lain'),
-                  items: list.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (String? value) {
-                    setState(() {
-                      _valueKetLain = value!;
-                    });
-                  })),
+              child: TextField(
+                keyboardType: TextInputType.multiline,
+                maxLines: 5,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  ),
+                  filled: true,
+                  hintText: 'Keterangan Lain',
+                ),
+                controller: _valueKetLain,
+              )),
           Padding(
               padding:
                   EdgeInsets.only(top: 15, left: 100, right: 100, bottom: 20),
@@ -343,7 +319,9 @@ class _TambahPiketHarianState extends State<TambahPiketHarian> {
                           MaterialStateProperty.all(Colors.amber[400]),
                     ),
                     onPressed: () {
-                      _simpanPiket();
+                      // _simpanPiket();
+
+                      print(bSapuLantai);
                     },
                     child: Text("SIMPAN"),
                   );
