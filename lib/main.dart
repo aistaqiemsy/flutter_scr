@@ -170,16 +170,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   }),
             ),
             Padding(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 10),
-            child: Checkbox(
-                value: this.valueCheckbox,
-                onChanged: (value) {
-                  setState(() {
-                    this.valueCheckbox = value!;
-                  });
-                }),
-          ),
-            Padding(
               padding: EdgeInsets.only(right: 15, left: 15, bottom: 10),
               child: ElevatedButton(
                 style: ButtonStyle(

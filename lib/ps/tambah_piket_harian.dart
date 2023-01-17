@@ -20,7 +20,27 @@ class TambahPiketHarian extends StatefulWidget {
 }
 
 class _TambahPiketHarianState extends State<TambahPiketHarian> {
- bool bSapuLantai = false,
+  _TambahPiketHarianState({required this.getRuang, required this.idRuang});
+  late DateTime _tglController;
+  late List getRuang;
+  late String idRuang;
+
+  static const List<String> list = <String>["-", "V"];
+  // String _valueSapuLantai = list.first;
+
+  late String _valueSapuLantai;
+  late String _valueLapKaca;
+  late String _valuePelLantai;
+  late String _valueMejaKursi;
+  late String _valueCleanSampah;
+  late String _valueLapKomputer;
+  late String _valueSaklar;
+
+  TextEditingController _idRuang = new TextEditingController();
+  TextEditingController _checker = new TextEditingController();
+  TextEditingController _valueKetLain = new TextEditingController();
+
+  bool bSapuLantai = false,
       bLapKaca = false,
       bPelLantai = false,
       bMejaKursi = false,
@@ -28,25 +48,6 @@ class _TambahPiketHarianState extends State<TambahPiketHarian> {
       bLapKomputer = false,
       bDeviceOff = false,
       bInfoLain = false;
-
-  _TambahPiketHarianState({required this.getRuang, required this.idRuang});
-  late DateTime _tglController;
-  late List getRuang;
-  late String idRuang;
-
-  static const List<String> list = <String>["-", "V"];
-  String _valueSapuLantai = list.first;
-  String _valueLapKaca = list.first;
-  String _valuepelLantai = list.first;
-  String _valueMejaKursi = list.first;
-  String _valueCleanSampah = list.first;
-  String _valueLapKomputer = list.first;
-  String _valueSaklar = list.first;
-  // String _valueKetLain = list.first;
-
-  TextEditingController _idRuang = new TextEditingController();
-  TextEditingController _checker = new TextEditingController();
-  TextEditingController _valueKetLain = new TextEditingController();
 
   Future<void> _simpanPiket() async {
     // var url = // server wikrama
@@ -62,16 +63,16 @@ class _TambahPiketHarianState extends State<TambahPiketHarian> {
       "id_ruang": _idRuang.text,
       "tgl": _tglController.toString(),
       "checker": _checker.text,
-      "sapu": _valueSapuLantai,
-      "lap": _valueLapKaca,
-      "pel": _valuepelLantai,
-      "meja": _valueMejaKursi,
-      "clean": _valueCleanSampah,
-      "lap_pc": _valueLapKaca,
-      "lampu": _valueSaklar,
-      "ket_lain": _valueKetLain
+      "sapu": bSapuLantai.toString(),
+      "lap": bLapKaca.toString(),
+      "pel": bPelLantai.toString(),
+      "meja": bMejaKursi.toString(),
+      "clean": bCleanSampah.toString(),
+      "lap_pc": bLapKomputer.toString(),
+      "lampu": bDeviceOff.toString(),
+      "ket_lain": _valueKetLain.text
     }, headers: {
-      "Access-Control-Allow-Methods": "POST, OPTIONS"
+      "Access-Control-Allow-Methods": "POST, OPTIONS" 
     });
 
     if (response.statusCode == 200) {
@@ -151,14 +152,22 @@ class _TambahPiketHarianState extends State<TambahPiketHarian> {
             ),
           ),
           Padding(
-              padding: EdgeInsets.only(top: 10),
-              child: Checkbox(
-                value: this.bSapuLantai,
-                onChanged: (value) {
-                  setState(() {
-                    this.bSapuLantai = value!;
-                  });
-                },
+              padding: EdgeInsets.only(left: 55, right: 20, top: 10),
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: this.bSapuLantai,
+                    onChanged: (value) {
+                      setState(() {
+                        this.bSapuLantai = value!;
+                        print("VALUE SAPU LANTAI ==> $bSapuLantai\n");
+                        _valueSapuLantai = bSapuLantai.toString();
+                        print("TEXT ==> $_valueSapuLantai");
+                      });
+                    },
+                  ),
+                  Text("Sapu Lantai")
+                ],
               )
               // DropdownButtonFormField(
               //     decoration: InputDecoration(
@@ -179,121 +188,224 @@ class _TambahPiketHarianState extends State<TambahPiketHarian> {
               //     }),
               ),
           Padding(
-              padding: EdgeInsets.only(left: 60, right: 20, top: 10),
-              child: DropdownButtonFormField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      filled: true,
-                      hintText: 'Lap Kaca'),
-                  items: list.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (String? value) {
-                    setState(() {
-                      _valueLapKaca = value!;
-                    });
-                  })),
+              padding: EdgeInsets.only(left: 55, right: 20, top: 10),
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: this.bLapKaca,
+                    onChanged: (value) {
+                      setState(() {
+                        this.bLapKaca = value!;
+                        print("VALUE LAP KACA ==> $bLapKaca");
+                        _valueLapKaca = bLapKaca.toString();
+                      });
+                    },
+                  ),
+                  Text("Lap Kaca")
+                ],
+              )
+
+              // DropdownButtonFormField(
+              //     decoration: InputDecoration(
+              //         border: OutlineInputBorder(
+              //             borderRadius: BorderRadius.all(Radius.circular(5))),
+              //         filled: true,
+              //         hintText: 'Lap Kaca'),
+              //     items: list.map<DropdownMenuItem<String>>((String value) {
+              //       return DropdownMenuItem<String>(
+              //         value: value,
+              //         child: Text(value),
+              //       );
+              //     }).toList(),
+              //     onChanged: (String? value) {
+              //       setState(() {
+              //         _valueLapKaca = value!;
+              //       });
+              //     })
+              ),
           Padding(
-              padding: EdgeInsets.only(left: 60, right: 20, top: 10),
-              child: DropdownButtonFormField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      filled: true,
-                      hintText: 'Pel Lantai'),
-                  items: list.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (String? value) {
-                    setState(() {
-                      _valuepelLantai = value!;
-                    });
-                  })),
+              padding: EdgeInsets.only(left: 55, right: 20, top: 10),
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: this.bPelLantai,
+                    onChanged: (value) {
+                      setState(() {
+                        this.bPelLantai = value!;
+                        print("VALUE PEL LANTAI ==> $bPelLantai");
+                        _valuePelLantai = bPelLantai.toString();
+                      });
+                    },
+                  ),
+                  Text("Pel Lantai")
+                ],
+              )
+
+              // DropdownButtonFormField(
+              //     decoration: InputDecoration(
+              //         border: OutlineInputBorder(
+              //             borderRadius: BorderRadius.all(Radius.circular(5))),
+              //         filled: true,
+              //         hintText: 'Pel Lantai'),
+              //     items: list.map<DropdownMenuItem<String>>((String value) {
+              //       return DropdownMenuItem<String>(
+              //         value: value,
+              //         child: Text(value),
+              //       );
+              //     }).toList(),
+              //     onChanged: (String? value) {
+              //       setState(() {
+              //         _valuepelLantai = value!;
+              //       });
+              //     }),
+              ),
           Padding(
-              padding: EdgeInsets.only(left: 60, right: 20, top: 10),
-              child: DropdownButtonFormField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      filled: true,
-                      hintText: 'Merapikan Meja dan Kursi'),
-                  items: list.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (String? value) {
-                    setState(() {
-                      _valueMejaKursi = value!;
-                    });
-                  })),
+              padding: EdgeInsets.only(left: 55, right: 20, top: 10),
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: this.bMejaKursi,
+                    onChanged: (value) {
+                      setState(() {
+                        this.bMejaKursi = value!;
+                        print("VALUE MEJA KURSI ==> $bMejaKursi");
+                        _valueMejaKursi = bMejaKursi.toString();
+                      });
+                    },
+                  ),
+                  Text("Membersihkan / Merapikan Meja dan Kursi")
+                ],
+              )
+
+              // DropdownButtonFormField(
+              //     decoration: InputDecoration(
+              //         border: OutlineInputBorder(
+              //             borderRadius: BorderRadius.all(Radius.circular(5))),
+              //         filled: true,
+              //         hintText: 'Merapikan Meja dan Kursi'),
+              //     items: list.map<DropdownMenuItem<String>>((String value) {
+              //       return DropdownMenuItem<String>(
+              //         value: value,
+              //         child: Text(value),
+              //       );
+              //     }).toList(),
+              //     onChanged: (String? value) {
+              //       setState(() {
+              //         _valueMejaKursi = value!;
+              //       });
+              //     }),
+              ),
           Padding(
-              padding: EdgeInsets.only(left: 60, right: 20, top: 10),
-              child: DropdownButtonFormField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      filled: true,
-                      hintText: 'Membersihkan Sampah'),
-                  items: list.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (String? value) {
-                    setState(() {
-                      _valueCleanSampah = value!;
-                    });
-                  })),
+              padding: EdgeInsets.only(left: 55, right: 20, top: 10),
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: this.bCleanSampah,
+                    onChanged: (value) {
+                      setState(() {
+                        this.bCleanSampah = value!;
+                        print("VALUE MEMBERSIHKAN SAMPAH ==> $bCleanSampah");
+                        _valueCleanSampah = bCleanSampah.toString();
+                      });
+                    },
+                  ),
+                  Text("Membersihkan Sampah ( Luar - Dalam )")
+                ],
+              )
+
+              // DropdownButtonFormField(
+              //     decoration: InputDecoration(
+              //         border: OutlineInputBorder(
+              //             borderRadius: BorderRadius.all(Radius.circular(5))),
+              //         filled: true,
+              //         hintText: 'Membersihkan Sampah'),
+              //     items: list.map<DropdownMenuItem<String>>((String value) {
+              //       return DropdownMenuItem<String>(
+              //         value: value,
+              //         child: Text(value),
+              //       );
+              //     }).toList(),
+              //     onChanged: (String? value) {
+              //       setState(() {
+              //         _valueCleanSampah = value!;
+              //       });
+              //     }),
+              ),
           Padding(
-              padding: EdgeInsets.only(left: 60, right: 20, top: 10),
-              child: DropdownButtonFormField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      filled: true,
-                      hintText: 'Lap Komputer'),
-                  items: list.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (String? value) {
-                    setState(() {
-                      _valueLapKomputer = value!;
-                    });
-                  })),
+              padding: EdgeInsets.only(left: 55, right: 20, top: 10),
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: this.bLapKomputer,
+                    onChanged: (value) {
+                      setState(() {
+                        this.bLapKomputer = value!;
+                        print("LAP KOMPUTER ==> $bLapKomputer");
+                        _valueLapKomputer = bLapKomputer.toString();
+                      });
+                    },
+                  ),
+                  Text("Lap Komputer ( Khusus 206, 207 dan 210 )")
+                ],
+              )
+
+              // DropdownButtonFormField(
+              //     decoration: InputDecoration(
+              //         border: OutlineInputBorder(
+              //             borderRadius: BorderRadius.all(Radius.circular(5))),
+              //         filled: true,
+              //         hintText: 'Lap Komputer'),
+              //     items: list.map<DropdownMenuItem<String>>((String value) {
+              //       return DropdownMenuItem<String>(
+              //         value: value,
+              //         child: Text(value),
+              //       );
+              //     }).toList(),
+              //     onChanged: (String? value) {
+              //       setState(() {
+              //         _valueLapKomputer = value!;
+              //       });
+              //     }),
+              ),
           Padding(
-              padding: EdgeInsets.only(left: 60, right: 20, top: 10),
-              child: DropdownButtonFormField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      filled: true,
-                      hintText: 'Lampu, Saklar dan Komputer Mati'),
-                  items: list.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (String? value) {
-                    setState(() {
-                      _valueSaklar = value!;
-                    });
-                  })),
+              padding: EdgeInsets.only(left: 55, right: 20, top: 10),
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: this.bDeviceOff,
+                    onChanged: (value) {
+                      setState(() {
+                        this.bDeviceOff = value!;
+                        print(
+                            "LAMPU, SAKLAR DAN KOMPUTER KONDISI MATI ==> $bDeviceOff");
+                        _valueSaklar = bDeviceOff.toString();
+                      });
+                    },
+                  ),
+                  Text("Lampu, Saklar dan Komputer Kondisi Mati")
+                ],
+              )
+
+              // DropdownButtonFormField(
+              //     decoration: InputDecoration(
+              //         border: OutlineInputBorder(
+              //             borderRadius: BorderRadius.all(Radius.circular(5))),
+              //         filled: true,
+              //         hintText: 'Lampu, Saklar dan Komputer Mati'),
+              //     items: list.map<DropdownMenuItem<String>>((String value) {
+              //       return DropdownMenuItem<String>(
+              //         value: value,
+              //         child: Text(value),
+              //       );
+              //     }).toList(),
+              //     onChanged: (String? value) {
+              //       setState(() {
+              //         _valueSaklar = value!;
+              //       });
+              //     }),
+              ),
           Padding(
-              padding: EdgeInsets.only(left: 60, right: 20, top: 10),
+              padding: EdgeInsets.only(left: 55, right: 20, top: 10),
               child: TextField(
                 keyboardType: TextInputType.multiline,
                 maxLines: 5,
@@ -319,9 +431,7 @@ class _TambahPiketHarianState extends State<TambahPiketHarian> {
                           MaterialStateProperty.all(Colors.amber[400]),
                     ),
                     onPressed: () {
-                      // _simpanPiket();
-
-                      print(bSapuLantai);
+                      _simpanPiket();
                     },
                     child: Text("SIMPAN"),
                   );
