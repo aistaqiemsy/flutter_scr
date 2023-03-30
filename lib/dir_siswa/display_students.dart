@@ -1,25 +1,25 @@
-import 'dart:io';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:scr_wikrama/dir_siswa/add_student.dart';
 import 'package:scr_wikrama/dir_siswa/detail_student.dart';
+import 'package:http/http.dart' as http;
 
 class DisplayStudent extends StatelessWidget {
-  const DisplayStudent({super.key, required this.students});
+  DisplayStudent({super.key, required this.students});
   final List students;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.groups_rounded),
+        leading: const Icon(Icons.groups_rounded),
         backgroundColor: Colors.amber[600],
-        title: Text("Peserta Didik"),
+        title: const Text("Peserta Didik"),
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.align_vertical_bottom_rounded),
+            icon: const Icon(Icons.align_vertical_bottom_rounded),
           ),
         ],
       ),
@@ -28,19 +28,28 @@ class DisplayStudent extends StatelessWidget {
         itemCount: students.length,
         itemBuilder: (context, index) {
           return Padding(
-              padding: EdgeInsets.only(top: 1, bottom: 1, right: 5, left: 5),
+              padding:
+                  const EdgeInsets.only(top: 1, bottom: 1, right: 5, left: 5),
               child: Card(
                 elevation: 3,
                 child: InkWell(
                   child: ListTile(
-                    leading: Icon(Icons.person_pin),
+                    leading: const Icon(Icons.person_pin),
                     title: Text(students[index]["nama"]),
-                    subtitle: Text(students[index]["rombel"]),
+                    subtitle: Row(
+                      children: [
+                        Text(students[index]["rombel"]),
+                        Text(" | "),
+                        Text(students[index]["id_siswa"])
+                      ],
+                    ),
                   ),
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DetailStudent())
+                      MaterialPageRoute(builder: (context) => DetailStudent(
+                        idSiswa: students[index]["id_siswa"],
+                      ))
                       );
                   },
                 ),
@@ -75,10 +84,10 @@ class DisplayStudent extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.amber[400],
-        child: Icon(Icons.person_add),
+        child: const Icon(Icons.person_add),
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => AddStudent()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const AddStudent()));
         },
       ),
     );

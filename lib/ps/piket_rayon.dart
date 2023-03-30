@@ -34,7 +34,7 @@ class _PiketRayonState extends State<PiketRayon> {
 
     final List dataUser;
     final dynamic id_ruang;
-    late List displaySiswa;
+    late List students;
 
    Future<void> _displaySiswa() async { // tampilkan data siswa per rayon
   //  var url = // server wikrama
@@ -56,14 +56,14 @@ class _PiketRayonState extends State<PiketRayon> {
      );
 
      if (response.statusCode == 200) {
-       displaySiswa = jsonDecode(response.body);
-       print(displaySiswa);
+       students = jsonDecode(response.body);
+       print(students);
 
        Navigator.push(
          context,
          MaterialPageRoute(
              builder: (context) =>
-                 DisplayStudent(students: displaySiswa)
+                 DisplayStudent(students: students)
          ),
        );
 

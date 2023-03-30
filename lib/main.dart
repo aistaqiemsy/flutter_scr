@@ -44,18 +44,18 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
   String _setRuang = "";
 
-  TextEditingController _username = new TextEditingController();
-  TextEditingController _password = new TextEditingController();
+  final TextEditingController _username = TextEditingController();
+  final TextEditingController _password = TextEditingController();
   List userLogin = [];
 
   Future<void> _onLogin() async {
     // login
-    // var url = // server wikrama
-    //     Uri.http("10.20.30.100:812", "/scr_wikrama/lib_ps/login.php",
-    //         {'q': '{http}'});
+    var url = // server wikrama
+        Uri.http("10.20.30.100:812", "/scr_wikrama/lib_ps/login.php",
+            {'q': '{http}'});
 
-    var url = // gunakakan IP komputer saat debug ke physical device
-        Uri.http("127.0.0.1", "/scr_wikrama/lib_ps/login.php", {'q': '{http}'});
+    // var url = // gunakakan IP komputer saat debug ke physical device
+    //     Uri.http("127.0.0.1", "/scr_wikrama/lib_ps/login.php", {'q': '{http}'});
 
     var response = await http.post(url, body: {
       "username": _username.text,
@@ -72,8 +72,10 @@ class _MyHomePageState extends State<MyHomePage> {
       const snackBar = SnackBar(
         content: Text('Autentikasi berhasil!'),
       );
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
+      // ignore: use_build_context_synchronously
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -102,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Padding(
               padding:
-                  EdgeInsets.only(right: 15, top: 25, left: 15, bottom: 25),
+                  const EdgeInsets.only(right: 15, top: 25, left: 15, bottom: 25),
               child: CircleAvatar(
                 maxRadius: 50,
                 backgroundColor: Colors.amber[50],
@@ -113,43 +115,43 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(bottom: 10),
               child: Text("PPLG APPS"),
             ),
             Padding(
-              padding: EdgeInsets.only(right: 15, left: 15, bottom: 10),
+              padding: const EdgeInsets.only(right: 15, left: 15, bottom: 10),
               child: TextFormField(
                 controller: _username,
                 decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.amber[50],
-                    prefixIcon: Icon(Icons.email_rounded),
+                    prefixIcon: const Icon(Icons.email_rounded),
                     hintText: ("Email"),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10))),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(right: 15, left: 15, bottom: 10),
+              padding: const EdgeInsets.only(right: 15, left: 15, bottom: 10),
               child: TextFormField(
                 controller: _password,
                 obscureText: true,
                 decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.amber[50],
-                    prefixIcon: Icon(Icons.password_rounded),
+                    prefixIcon: const Icon(Icons.password_rounded),
                     hintText: ("Kata Sandi"),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10))),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(right: 100, bottom: 10, left: 100),
+              padding: const EdgeInsets.only(right: 100, bottom: 10, left: 100),
               child: DropdownButtonFormField(
-                  icon: Icon(Icons.meeting_room_rounded),
+                  icon: const Icon(Icons.meeting_room_rounded),
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5))),
                       filled: true,
                       fillColor: Colors.amber[50],
@@ -159,7 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       value: value,
                       child: Text(
                         value,
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                       ),
                     );
                   }).toList(),
@@ -170,7 +172,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   }),
             ),
             Padding(
-              padding: EdgeInsets.only(right: 15, left: 15, bottom: 10),
+              padding: const EdgeInsets.only(right: 15, left: 15, bottom: 10),
               child: ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
@@ -183,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   // print(valueCheckbox);
                 },
-                child: Padding(
+                child: const Padding(
                   padding: EdgeInsets.all(10),
                   child: Text("Masuk"),
                 ),
@@ -200,7 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
       print("Email tidak boleh kosong!");
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
+        content: const Text(
           "Email tidak boleh kosong!",
           style: TextStyle(
             color: Colors.teal,
