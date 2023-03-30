@@ -13,19 +13,13 @@ class DisplayStudent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(
-            Icons.groups_rounded
-        ),
+        leading: Icon(Icons.groups_rounded),
         backgroundColor: Colors.amber[600],
         title: Text("Peserta Didik"),
         actions: [
           IconButton(
-            onPressed: (){
-
-            },
-            icon: Icon(
-                Icons.align_vertical_bottom_rounded
-            ),
+            onPressed: () {},
+            icon: Icon(Icons.align_vertical_bottom_rounded),
           ),
         ],
       ),
@@ -34,45 +28,57 @@ class DisplayStudent extends StatelessWidget {
         itemCount: students.length,
         itemBuilder: (context, index) {
           return Padding(
-              padding: EdgeInsets.only(top: 0),
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 0, right: 10, left: 10),
-                  child: InkWell(
-                    onTap: () {
-
-                    },
-                    child:
-                    Row(
-                      children: [
-                        Container(
-                          width: 250,
-                          child: Text(students[index]["nama"]),
-                        ),
-                        Text(students[index]["rombel"])
-                      ],
-                    ),
-                  )
+              padding: EdgeInsets.only(top: 1, bottom: 1, right: 5, left: 5),
+              child: Card(
+                elevation: 3,
+                child: InkWell(
+                  child: ListTile(
+                    leading: Icon(Icons.person_pin),
+                    title: Text(students[index]["nama"]),
+                    subtitle: Text(students[index]["rombel"]),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DetailStudent())
+                      );
+                  },
                 ),
-                Divider()
-              ],
-            ),
-          );
-        },
+              )
 
+              // Column(
+              //   children: [
+              //     Padding(
+              //       padding: EdgeInsets.only(top: 0, right: 10, left: 10),
+              //       child: InkWell(
+              //         onTap: () {
+
+              //         },
+              //         child:
+              //         Row(
+              //           children: [
+              //             Container(
+              //               width: 250,
+              //               child: Text(students[index]["nama"]),
+              //             ),
+              //             Text(students[index]["rombel"])
+              //           ],
+              //         ),
+              //       )
+              //     ),
+              //     Divider()
+              //   ],
+              // ),
+
+              );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.amber[400],
-        child: Icon(
-          Icons.person_add
-        ),
+        child: Icon(Icons.person_add),
         onPressed: () {
           Navigator.push(
-                      context, 
-                      MaterialPageRoute(
-                        builder: (context) => AddStudent())
-                    );
+              context, MaterialPageRoute(builder: (context) => AddStudent()));
         },
       ),
     );

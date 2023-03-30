@@ -17,7 +17,7 @@ class DetailStudent extends StatelessWidget {
       ),
       body: Center(
         child: Padding(
-          padding: EdgeInsets.only(top: 15, right: 20, left: 20),
+          padding: EdgeInsets.only(top: 15, right: 20, left: 20, bottom: 15),
           child: Card(
           color: Colors.amber[50],
           elevation: 5,
@@ -191,46 +191,68 @@ class DetailStudent extends StatelessWidget {
                         fontSize: 17,
                       ),
                       ),
-                    )
+                    ),
                 ],
-              ),         
+              ), 
+              Divider(
+                      color: Colors.amberAccent[300],
+                    ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 5),
+                      child: ElevatedButton(onPressed: (){}, child: Icon(
+                        Icons.edit_note_sharp
+                      )),
+                      ),
+                    Padding(
+                      padding: EdgeInsets.only(right: 5),
+                      child: ElevatedButton(onPressed: (){}, child: Icon(
+                        Icons.delete
+                      )),
+                      )
+                  ],
+                )        
             ],
           ),
         ),
         )
       ),
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(right: 15),
-        child: Row(
-        // crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(right: 10),
-            child: FloatingActionButton(
-              backgroundColor: Colors.amber[200],
-              child: Icon(
-                color: Colors.blueGrey,
-                Icons.create
-              ),
-              onPressed: () {
+      // floatingActionButton: Padding(
+      //   padding: EdgeInsets.only(right: 15),
+      //   child: Row(
+      //   // crossAxisAlignment: CrossAxisAlignment.end,
+      //   mainAxisAlignment: MainAxisAlignment.end,
+      //   children: [
+      //     Padding(
+      //       padding: EdgeInsets.only(right: 10),
+      //       child: FloatingActionButton(
+      //         backgroundColor: Colors.amber[200],
+      //         child: Icon(
+      //           color: Colors.blueGrey,
+      //           Icons.create
+      //         ),
+      //         onPressed: () {
 
-              },
-            ),
-          ),
-          FloatingActionButton(
-            backgroundColor: Colors.amber[200],
-            child: Icon(
-              color:  Colors.red,
-              Icons.delete
-            ),
-            onPressed: () {
+      //         },
+      //       ),
+      //     ),
+      //     FloatingActionButton(
+      //       backgroundColor: Colors.amber[200],
+      //       child: Icon(
+      //         color:  Colors.red,
+      //         Icons.delete
+      //       ),
+      //       onPressed: () {
               
-            },
-          )
-        ],
-      ),
-      ),
+      //       },
+      //     )
+      //   ],
+      // ),
+      // ),
     );
   }
 }
