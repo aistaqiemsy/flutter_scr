@@ -1,0 +1,15 @@
+PASTIKAN SEBELUM 'flutter run' SUDAH MELAKUKAN import database YANG ADA DI DALAM FOLDER lib\db
+
+SERVER
+1. Wikrama : 10.20.30.100:812
+2. Komputer Lokal : 127.0.0.1 / localhost
+
+FILE PHP
+1. Pindah/Salin folder `scr_wikrama` yang ada di folder db ke localhost ( c:\xampp\htdocs )
+2. Cobalah akses salah satu file tersebut. ( Jika error dengan keterangan `Error undefined`, biarkan ) 
+
+Jalankan projek dengan perintah :
+flutter run
+
+Lebih lanjut :
+[ XMLHttpRequest error ] http://blog-mycode.blogspot.com/2022/10/mengatasi-error-xmlhttprequest-error.html 
